@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 import { withStyles } from '@material-ui/core/styles';
-import { Card,CardActions, CardContent } from '@material-ui/core';
+import { Card, CardMedia, CardContent } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import seaImg from '../assets/images/underwaterSurface.jpg'
 

@@ -16,7 +16,7 @@ const signin = user => {
         credentials: 'include',
         body: JSON.stringify(user)
         })
-        .then( response => response.json )
+        .then( response => response.json() )
         .catch( err => console.log(err) )
 };
 

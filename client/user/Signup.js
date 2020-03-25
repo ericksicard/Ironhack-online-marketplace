@@ -91,7 +91,7 @@ class Signup extends Component {
                         )}
                     </CardContent>
                     <CardActions>
-                        <Button color="primary" raised="raised" onClick={this.clickSubmit} className={classes.submit}>
+                        <Button color="primary" variant="contained" onClick={this.clickSubmit} className={classes.submit}>
                             Submit
                         </Button>
                     </CardActions>
@@ -103,7 +103,7 @@ class Signup extends Component {
                     </DialogContent>
                     <DialogActions>
                         <Link to="/signin">
-                            <Button color="primary" autoFocus="autoFocus" variant="raised">
+                            <Button color="primary" autoFocus="autoFocus" variant="contained">
                                 Sign In
                             </Button>
                         </Link>

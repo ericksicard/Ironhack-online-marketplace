@@ -58,7 +58,7 @@ const update = ( params, credentials, user ) => {
         },
         body: JSON.stringify(user)
         })
-        .then( response => response.json )
+        .then( response => response.json() )
         .catch( err => console.log(err) )
 };
 

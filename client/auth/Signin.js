@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
-import { signin } from './api-auth.js'
+import { signin } from './api-auth'
 import auth from './../auth/auth-helper'
 
 
@@ -96,7 +96,7 @@ class Signin extends Component {
                     )}
                 </CardContent>
                 <CardActions>
-                    <Button color="primary" variant="raised" onClick={this.clickSubmit} className={classes.submit}>Submit</Button>
+                    <Button color="primary" variant="contained" onClick={this.clickSubmit} className={classes.submit}>Submit</Button>
                 </CardActions>
             </Card>
         )
