@@ -11,22 +11,25 @@ import userRoutes from './routes/user.routes'
 import authRoutes from './routes/auth.routes'
 
 //****** Modules for server-side rendering ******
+
 //React modules: Required to render the React components and use renderToString
 import React from 'react'
-import ReactDOMServer from 'react-dom/server'
+import ReactDOMServer from 'react-dom/server';
+
 /* Router modules: The StaticRouter is a stateless router that takes the requested
 URL to match the frontend route and the MainRouter component, which is the
 root component in our frontend: */
-import StaticRouter from 'react-router-dom/StaticRouter'
-import MainRouter from './../client/MainRouter'
+import { StaticRouter } from "react-router-dom";
+import MainRouter from '../client/MainRouter';
+
 /* Material-UI modules: The following modules will help generate the CSS styles
 for the frontend components based on the Material-UI theme used on the
 frontend */
-import { JssProvider, SheetsRegistry } from 'react-jss'
-//import { SheetsRegistry } from 'react-jss/lib/jss';
-//import JssProvider from 'react-jss/lib/JssProvider'
-import { MuiThemeProvider, createMuiTheme, createGenerateClassName } from '@material-ui/core/styles';
+import { StylesProvider, createGenerateClassName } from '@material-ui/core/styles';
+import { ServerStyleSheets, ThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
 import { indigo, pink } from '@material-ui/core/colors';
+
 //****** end ******
 
 //comment it out when building the application code for production!!!!!
@@ -62,7 +65,9 @@ app.get('*', (req, res) => {
     //Preparing Material-UI styles for SSR
     /*In order to inject the Material-UI styles, on every request we first generate a new
     SheetsRegistry and MUI theme instance, matching what is used in the frontend code.*/
-    const sheetsRegistry = new SheetsRegistry();
+    const sheets = new ServerStyleSheets();
+    const generateClassName = createGenerateClassName()
+    
     const theme = createMuiTheme({
         palette: {
             primary: {
@@ -82,20 +87,21 @@ app.get('*', (req, res) => {
             type: 'light'
         }
     });
-    const generateClassName = createGenerateClassName()
 
     //Generating markup
     /*The purpose of using renderToString is to generate an HTML string version of the React
     component that is to be shown to the user in response to the requested URL*/
     const context = {};
     const markup = ReactDOMServer.renderToString(
-        <StaticRouter location={req.url} context={context} >
-            <JssProvider registry={sheetsRegistry} generateClassName={generateClassName} >
-                <MuiThemeProvider theme={theme} >
-                    <MainRouter />
-                </MuiThemeProvider>
-            </JssProvider>
-        </StaticRouter>
+        sheets.collect(
+            <StaticRouter location={req.url} context={context} >
+                <StylesProvider generateClassName={generateClassName} >
+                    <ThemeProvider theme={theme} >
+                        <MainRouter />
+                    </ThemeProvider>
+                </StylesProvider>
+            </StaticRouter>
+        )
     )
 
     //Sending a template with markup and CSS
@@ -106,10 +112,11 @@ app.get('*', (req, res) => {
     if (context.url) {
         return res.redirect(303, context.url)
     }
-    const css = sheetsRegistry.toString()
+    const css = sheets.toString()
+
     res.status(200).send(Template({
-        markup: markup,
-        css: css
+      markup: markup,
+      css: css
     }))
 })
 
