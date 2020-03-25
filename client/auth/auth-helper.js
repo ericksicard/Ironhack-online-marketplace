@@ -2,7 +2,7 @@
 /* The following helper methods store and retrieve JWT credentials from client-side sessionStorage,
 and also clear out the sessionStorage on user sign-out */
 
-import { signout } from './api-auth.js'
+import { signout } from './api-auth'
 
 const auth = {
     //Retrieve credentials if signed-in
@@ -28,7 +28,7 @@ const auth = {
 
     //Delete credentials and sign out
     signout(cb) {
-        if (typeof window == "undefined") sessionStorage.removeItem('jwt')
+        if (typeof window !== "undefined") sessionStorage.removeItem('jwt')
         cb()
         signout()
             .then( data => {
