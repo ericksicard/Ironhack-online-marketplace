@@ -77,8 +77,8 @@ class Profile extends Component {
     information is fetched and loaded in the component.
     */
     //CONSIDER static getDerivedStateFromProps
-    componentWillReceiveProps = (props) => {
-        this.init(props.match.params.userId)
+    UNSAFE_componentWillReceiveProps = (props) => {
+        this.init( props.match.params.userId )
     }
 
     componentDidMount = () => {
@@ -104,7 +104,7 @@ class Profile extends Component {
                                 </Avatar>
                             </ListItemAvatar>
                             <ListItemText primary={this.state.user.name} secondary={this.state.user.email} />
-                            { auth.isAuthenticated().user && auth.isAuthenticated._id == this.state.user._id && (
+                            { auth.isAuthenticated().user && auth.isAuthenticated().user._id == this.state.user._id && (
                                 <ListItemSecondaryAction>
                                     <Link to={'/user/edit/' + this.state.user._id} >
                                         <IconButton aria-label="Edit" color="primary">

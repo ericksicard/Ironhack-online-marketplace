@@ -100,7 +100,7 @@ class EditProfile extends Component {
                     )}
                 </CardContent>
                 <CardActions>
-                    <Button color="primary" variant="raised" onClick={this.clickSubmit} className={classes.submit}>Submit</Button>
+                    <Button color="primary" variant="contained" onClick={this.clickSubmit} className={classes.submit}>Submit</Button>
                 </CardActions>
             </Card>
         )

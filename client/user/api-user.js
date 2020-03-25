@@ -70,7 +70,7 @@ require a valid JWT as a credential. The response from the server to the delete
 request will be returned to the component as a promise.
 */
 const remove = ( params, credentials ) => {
-    return fetch('/api/users/', {
+    return fetch( '/api/users/' + params.userId, {
         method: 'DELETE',
         headers: {
             'Accept': 'application/json',

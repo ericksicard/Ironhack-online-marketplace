@@ -64,8 +64,8 @@ authentication verification, and the req.profile is populated by the userByID fu
 in the user.controller.js . We will add the hasAuthorization function to routes that
 require both authentication and authorization.
 */
-const hasAuthorization = (req, res) => {
-    const authorized = req.profile && req.auth && req.profile._id === req.auth._id;
+const hasAuthorization = (req, res, next) => {
+    const authorized = req.profile && req.auth && req.profile._id == req.auth._id;
     if(!authorized) {
         return res.status(403).json({
             error: "User is not authorized"

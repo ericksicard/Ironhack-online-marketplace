@@ -20,7 +20,7 @@ class DeleteUser extends Component {
     }
 
     deleteAccount = () => {
-        const jwt = auth.isAuthenticated()
+        const jwt = auth.isAuthenticated();
 
         remove({ userId: this.props.userId }, { t: jwt.token })
             .then( data => {
@@ -42,7 +42,7 @@ class DeleteUser extends Component {
 
         return (
             <span>
-                <IconButton aria-label="Delete" onClick={this.clickButton} color="secundary" >
+                <IconButton aria-label="Delete" onClick={this.clickButton} color="secondary" >
                     <DeleteIcon />
                 </IconButton>
                 <Dialog open={this.state.open} onClose={this.handleRequestClose} >

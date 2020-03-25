@@ -11,7 +11,7 @@ const auth = {
             return false
         }
         else if (sessionStorage.getItem('jwt')) {
-            console.log('This is the authentication info: ' + sessionStorage.getItem('jwt') )
+            console.log('This is the "t" info: ' + JSON.parse(sessionStorage.getItem('jwt')).token )
             return JSON.parse(sessionStorage.getItem('jwt'))
         }
         else {
