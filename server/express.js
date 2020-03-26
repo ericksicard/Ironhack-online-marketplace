@@ -10,6 +10,7 @@ import Template from './../template'
 import userRoutes from './routes/user.routes'
 import authRoutes from './routes/auth.routes'
 
+
 //****** Modules for server-side rendering ******
 
 //React modules: Required to render the React components and use renderToString
@@ -64,7 +65,7 @@ app.get('*', (req, res) => {
     
     //Preparing Material-UI styles for SSR
     /*In order to inject the Material-UI styles, on every request we first generate a new
-    SheetsRegistry and MUI theme instance, matching what is used in the frontend code.*/
+    ServerStyleSheets and MUI theme instance, matching what is used in the frontend code.*/
     const sheets = new ServerStyleSheets();
     const generateClassName = createGenerateClassName()
     

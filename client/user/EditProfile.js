@@ -71,8 +71,7 @@ class EditProfile extends Component {
         update(
           { userId: this.match.params.userId }, 
           { t: jwt.token },
-          user 
-          )
+          user )
           .then( data => {
               if (data.error) this.setState({ error: data.error })
               else this.setState({ 'userId': data._id, redirectToProfile: true })
