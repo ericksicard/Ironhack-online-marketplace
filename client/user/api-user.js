@@ -49,7 +49,7 @@ user, then use fetch to make a PUT call to update the existing user in the backe
 also a protected route that will require a valid JWT as credential.
 */
 const update = ( params, credentials, user ) => {
-    return fetch('api/users/' + params.userId, {
+    return fetch('/api/users/' + params.userId, {
         method: 'PUT',
         headers: {
             'Accept': 'application/json',

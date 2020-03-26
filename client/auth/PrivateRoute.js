@@ -2,9 +2,9 @@ import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import auth from './auth-helper'
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const PrivateRoute = ({ exact, path, component: Component }) => {
     return (
-        <Route {...rest} render = { props => (
+        <Route exact={exact} path={path}  render = { props => (
             auth.isAuthenticated() 
                 ? <Component {...props } />
                 : <Redirect to= {{

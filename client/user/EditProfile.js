@@ -56,7 +56,7 @@ class EditProfile extends Component {
         read({ userId: this.match.params.userId }, { t: jwt.token })
             .then( data => {
                 if (data.error) this.setState({ error: data.error })
-                else this.setState({ userId: data._id, redirectToProfile: true })
+                else this.setState({ name: data.name, email: data.email })
             })
     }
 
@@ -68,11 +68,15 @@ class EditProfile extends Component {
             password: this.state.password || undefined
         }
 
-        update({ userId: this.match.params.userId }, { t: jwt.token }, user )
-            .then( data => {
-                if (data.error) this.setState({ error: data.error })
-                else this.setState({ userId: data._id, redirectToProfile: true })
-            })
+        update(
+          { userId: this.match.params.userId }, 
+          { t: jwt.token },
+          user 
+          )
+          .then( data => {
+              if (data.error) this.setState({ error: data.error })
+              else this.setState({ 'userId': data._id, redirectToProfile: true })
+          })
 
     }
 
@@ -82,7 +86,9 @@ class EditProfile extends Component {
 
     render() {
         const {classes} = this.props;
-        if (this.state.redirectToProfile) return (<Redirect to={'user/' + this.state.userId} />)
+        if (this.state.redirectToProfile) {
+          return (<Redirect to={'/user/' + this.state.userId} />)
+        }
         return (
             <Card className={classes.card}>
                 <CardContent>

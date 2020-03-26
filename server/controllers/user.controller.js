@@ -69,7 +69,7 @@ const update = (req, res, next) => {
         .then( () => {
             user.hashed_password = undefined
             user.salt = undefined
-            res.json(user)
+            return res.json(user)
         })
         .cath( err => {
             return res.status(400).json({
