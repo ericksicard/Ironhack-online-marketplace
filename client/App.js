@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { hot } from 'react-hot-loader';
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { indigo, pink } from '@material-ui/core/colors';
+import { indigo, pink, red, teal } from '@material-ui/core/colors';
 
 //Create a theme instance.
 const theme = createMuiTheme({
@@ -17,12 +17,12 @@ const theme = createMuiTheme({
         },
         secondary: {
             light: '#ff79b0',
-            main: '#ff4081',
+            main: '#f44336',
             dark: '#c60055',
             contrastText: '#000',
         },
         openTitle: indigo['400'],
-        protectedTitle: pink['400'],
+        protectedTitle: red['900'],
         type: 'light'
     }
 })

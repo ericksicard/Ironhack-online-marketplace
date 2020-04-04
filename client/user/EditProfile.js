@@ -57,7 +57,7 @@ class EditProfile extends Component {
         read({ userId: this.match.params.userId }, { t: jwt.token })
             .then( data => {
                 if (data.error) this.setState({ error: data.error })
-                else this.setState({ name: data.name, email: data.email })
+                else this.setState({ name: data.name, email: data.email, seller: data.seller })
             })
     }
 
@@ -116,6 +116,7 @@ class EditProfile extends Component {
                                                                 }}
                                                         checked={this.state.seller}
                                                         onChange={this.handleCheck}
+                                                        color='primary'
                                                 /> }
                                       label={this.state.seller ? 'Active' : 'Inactive'}
                     />

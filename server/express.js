@@ -29,7 +29,7 @@ frontend */
 import { StylesProvider, createGenerateClassName } from '@material-ui/core/styles';
 import { ServerStyleSheets, ThemeProvider } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
-import { indigo, pink } from '@material-ui/core/colors';
+import { indigo, pink, red, teal } from '@material-ui/core/colors';
 
 //****** end ******
 
@@ -79,12 +79,12 @@ app.get('*', (req, res) => {
             },
             secondary: {
                 light: '#ff79b0',
-                main: '#ff4081',
+                main: '#f44336',
                 dark: '#c60055',
                 contrastText: '#000',
             },
             openTitle: indigo['400'],
-            protectedTitle: pink['400'],
+            protectedTitle: red['900'],
             type: 'light'
         }
     });
