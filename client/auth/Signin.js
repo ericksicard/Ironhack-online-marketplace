@@ -47,7 +47,7 @@ class Signin extends Component {
     }
 
     /* The redirectToReferrer should be set to true when the user successfully signs in after
-    submitting the form and the received JWT is stored in the sessionStorage . To store the
+    submitting the form and the received JWT is stored in the sessionStorage. To store the
     JWT and redirect afterwords, we will call the authenticate() method defined in auth-helper.js. */
     clickSubmit = () => {
         const user = {

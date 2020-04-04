@@ -30,7 +30,13 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: "Password is required"
     },
-    salt: String
+    salt: String,
+
+    //Seller option
+    seller: {
+        type: Boolean,
+        default: false
+    }
 });
 
 

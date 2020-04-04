@@ -26,6 +26,18 @@ const auth = {
         cb()
     },
 
+    // Updating the user details stored in sessionStorage for auth purposes
+    updateUser(user, cb) {
+        if (typeof window !== undefined) {
+            if (sessionStorage.getItem('jwt')) {
+                let auth = JSON.parse(sessionStorage.getItem('jwt'));
+                auth.user = user;
+                sessionStorage.setItem('jwt', JSON.stringify(auth))
+                cb()
+            }
+        }
+    },
+
     //Delete credentials and sign out
     signout(cb) {
         if (typeof window !== "undefined") sessionStorage.removeItem('jwt')
