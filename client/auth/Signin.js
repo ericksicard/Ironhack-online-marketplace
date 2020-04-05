@@ -43,7 +43,8 @@ class Signin extends Component {
         email: '',
         password: '',
         error: '',
-        redirectToReferrer: false  //it should be set to true when the user successfully signs in after submitting the form and the received JWT is stored in the sessionStorage. 
+        redirectToReferrer: false,  //it should be set to true when the user successfully signs in after submitting the form and the received JWT is stored in the sessionStorage. 
+        seller: false
     }
 
     /* The redirectToReferrer should be set to true when the user successfully signs in after
@@ -60,7 +61,7 @@ class Signin extends Component {
                 if (data.error) this.setState({ error: data.error })
                 else {
                     auth.authenticate( data, () => {
-                        this.setState({ redirectToReferrer: true })
+                        this.setState({ redirectToReferrer: true, seller: data.seller })
                     })
                 }
             })

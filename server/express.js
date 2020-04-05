@@ -9,6 +9,7 @@ import helmet from 'helmet'                     // collection of middleware func
 import Template from './../template'
 import userRoutes from './routes/user.routes'
 import authRoutes from './routes/auth.routes'
+import shopRoutes from './routes/shop.routes'
 
 
 //****** Modules for server-side rendering ******
@@ -58,6 +59,7 @@ app.use('/dist', express.static(path.join(CURRENT_WORKING_DIR, 'dist')))
 // mount routes
 app.use('/', userRoutes)
 app.use('/', authRoutes)
+app.use('/', shopRoutes)
 
 
 //Basic Server-Side Rendering(SSR)

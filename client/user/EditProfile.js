@@ -52,13 +52,20 @@ class EditProfile extends Component {
     }
 
     componentDidMount = () => {
-        const jwt = auth.isAuthenticated();
+      const jwt = auth.isAuthenticated();
 
-        read({ userId: this.match.params.userId }, { t: jwt.token })
-            .then( data => {
-                if (data.error) this.setState({ error: data.error })
-                else this.setState({ name: data.name, email: data.email, seller: data.seller })
-            })
+      read(
+        { userId: this.match.params.userId },
+        { t: jwt.token }
+      )
+      .then( data => {
+        if (data.error) {
+          this.setState({ error: data.error })
+        }
+        else {
+          this.setState({ name: data.name, email: data.email, seller: data.seller })
+        }
+      })
     }
 
     clickSubmit = () => {
@@ -86,39 +93,43 @@ class EditProfile extends Component {
           })
     }
 
-    handleChange = name => event => {
+    handleChange = (event, name) => {
         this.setState({ [name]: event.target.value })
     }
 
-    handleCheck = (event, checked) => {
+    handleCheck = (event ,checked) => {
       this.setState({'seller': checked})
     }
 
     render() {
         const {classes} = this.props;
+
         if (this.state.redirectToProfile) {
           return (<Redirect to={'/user/' + this.state.userId} />)
         }
+        
         return (
             <Card className={classes.card}>
                 <CardContent>
                     <Typography type="headline" component="h2" className={classes.title}>
                       Edit Profile
                     </Typography>
-                    <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={this.handleChange('name')} margin="normal"/><br/>
-                    <TextField id="email" type="email" label="Email" className={classes.textField} value={this.state.email} onChange={this.handleChange('email')} margin="normal"/><br/>
-                    <TextField id="password" type="password" label="Password" className={classes.textField} value={this.state.password} onChange={this.handleChange('password')} margin="normal"/><br/>
+                    <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={event => this.handleChange(event, 'name')} margin="normal"/><br/>
+                    <TextField id="email" type="email" label="Email" className={classes.textField} value={this.state.email} onChange={event => this.handleChange(event, 'email')} margin="normal"/><br/>
+                    <TextField id="password" type="password" label="Password" className={classes.textField} value={this.state.password} onChange={event => this.handleChange(event, 'password')} margin="normal"/><br/>
                     <Typography type="subheading" component="h4" className={classes.subheading} >
                       Seller Account
                     </Typography>
-                    <FormControlLabel control={ <Switch classes={{ checked: classes.checked,
-                                                                    bar: classes.bar
-                                                                }}
-                                                        checked={this.state.seller}
-                                                        onChange={this.handleCheck}
-                                                        color='primary'
-                                                /> }
-                                      label={this.state.seller ? 'Active' : 'Inactive'}
+                    <FormControlLabel 
+                      control={ <Switch 
+                                  classes={{ checked: classes.checked,
+                                              bar: classes.bar
+                                          }}
+                                  color='primary'
+                                  checked={this.state.seller}
+                                  onChange={ this.handleCheck }                                                        
+                                /> }
+                      label={this.state.seller ? 'Active' : 'Inactive'}
                     />
                     { this.state.error && (
                     <Typography component="p" color="error">
