@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import auth from '../auth/auth-helper'; 
 import create from './api-shop';
 
 
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import { List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, CardContent, Button, TextField, Icon, CardActions } from '@material-ui/core';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
+import { CardContent, Button, TextField, Icon, CardActions } from '@material-ui/core';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import Typography from '@material-ui/core/Typography';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import PersonIcon from '@material-ui/icons/Person';
 
 const styles = theme => ({
     card: {
@@ -92,7 +87,7 @@ class NewShop extends Component {
         }
 
         return (
-            <div>
+            <Card className={classes.card}>
                 <CardContent>
                     <Typography type='headline' component='h2' className={classes.title}>New Shop</Typography><br/>
                     <input accept='image/*' onChange={ event => this.handleChange(event, 'image')} className={classes.input} id='icon-button-file' type='file' />
@@ -132,7 +127,7 @@ class NewShop extends Component {
                 <CardActions>
                     <Button color='primary' variant='contained' onClick={this.clickSubmit} className={classes.submit}>Submit</Button>
                 </CardActions>
-            </div>
+            </Card>
         )
     }
 }
