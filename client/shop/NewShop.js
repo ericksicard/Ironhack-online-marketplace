@@ -2,12 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom';
 import auth from '../auth/auth-helper'; 
-import create from './api-shop';
+import { create } from './api-shop.js';
 
 
 import { withStyles } from '@material-ui/core/styles';
-import { CardContent, Button, TextField, Icon, CardActions } from '@material-ui/core';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import Button from '@material-ui/core/Button';
+import Icon from '@material-ui/core/Icon';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import TextField from '@material-ui/core/TextField';
+import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
@@ -94,7 +99,7 @@ class NewShop extends Component {
                     <label htmlFor='icon-button-file'>
                         <Button color='secondary' variant='contained' component='span'>
                             Upload Logo
-                            <PhotoCamera />
+                            <PhotoCameraIcon/>
                         </Button>
                     </label>
                     <span className={classes.filename}>{this.state.image ? this.state.image : ''}</span><br/>

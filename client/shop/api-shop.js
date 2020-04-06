@@ -14,10 +14,10 @@ const create = (params, credentials, shop) => {
 
 //List the shops
 const list = () => {
-    return fetch('/api/shops', {
+    return fetch('/api/shops/', {
         method: 'GET'
     })
-    .then( response => response.response )
+    .then( response => response.json() )
     .catch( err => console.log(err) )
 }
 
@@ -30,7 +30,7 @@ const listByOwner = (params, credentials) => {
             'Authorization': 'Bearer' + credentials.t
         }
     })
-    .then( response => response.json())
+    .then( response => response.json() )
     .catch( err => console.log(err) )
 }
 
@@ -57,4 +57,4 @@ const update = (params, credentials, shop) => {
     .catch( err => console.log(err) )
 }
 
-export default { create, list, listByOwner, read, update };
+export { create, list, listByOwner, read, update };

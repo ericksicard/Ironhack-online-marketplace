@@ -1,47 +1,43 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
-import { listByOwner } from './api-shop'
+import { Link, Redirect } from 'react-router-dom'
+import { listByOwner } from './api-shop.js'
 import auth from '../auth/auth-helper'
-import DeleteShop from './DeleteShop'  
+//import DeleteShop from './DeleteShop'  
 
 
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import { List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Divider, Button } from '@material-ui/core';
-import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import AddBoxIcon from '@material-ui/icons/AddBox';
+import EditIcon from '@material-ui/icons/Edit';
+import Icon from '@material-ui/core/Icon';
 
 const styles = theme => ({
     root: theme.mixins.gutters({
         maxWidth: 600,
         margin: 'auto',
         padding: theme.spacing(3),
-        marginTop: theme.spacing(5),
-        marginBottom: theme.spacing(3)
+        marginTop: theme.spacing(5)
     }),
     title: {
-        margin: `${theme.spacing(3)}px 0 ${theme.spacing(2)}px`,
+        margin: `${theme.spacing(3)}px 0 ${theme.spacing(3)}px ${theme.spacing(1)}px` ,
         color: theme.palette.protectedTitle,
-        textAlign: 'center',
         fontSize: '1.2em'
+      },
+    addButton:{
+        float:'right'
     },
-    avatar:{
-        width: 100,
-        height: 100
-    },
-    subheading: {
-        color: theme.palette.text.secondary
-    },
-    shopTitle: {
-        fontSize: '1.2em',
-        marginBottom: '5px'
-    },
-    details: {
-        padding: '24px'
+    leftIcon: {
+        marginRight: "8px"
     }
 });
 
@@ -58,15 +54,18 @@ class MyShops extends Component {
             {userId: jwt.user._id},
             {t: jwt.token}
             ).then( data => {
-                if (data.error) this.setState({redirectToSignin: true})
-                else this.setState({ shops: data })
+                if (data.error) this.setState({ redirectToSignin: true }) 
+                else {
+                    this.setState({ shops: data }) 
+                }
             })
     }
 
     removeShop = (shop) => {
-        const updatedShop = this.state.shops;
-        const shops = updatedShop.filter( (shop, idx, arr) => arr.indexOf(shop) == idx );
-        this.setState({ shops: shops })
+        const updatedShops = this.state.shops
+        const index = updatedShops.indexOf(shop)
+        updatedShops.splice(index, 1)
+        this.setState({shops: updatedShops})
     }
 
     componentDidMount = () => {
@@ -75,6 +74,11 @@ class MyShops extends Component {
 
     render() {
         const {classes} = this.props
+        const redirectToSignin = this.state.redirectToSignin
+        
+        if (redirectToSignin) {
+            return <Redirect to='/signin'/>
+        }
 
         return (
             <div>
@@ -84,7 +88,7 @@ class MyShops extends Component {
                         <span className={classes.addButton}>
                             <Link to='/seller/shop/new'>
                                 <Button color='primary' variant='contained'>
-                                    <AddBoxIcon className={classes.leftIcon} />
+                                    <Icon className={classes.leftIcon}>add_box</Icon>
                                     New Shop
                                 </Button>
                             </Link>
@@ -95,34 +99,25 @@ class MyShops extends Component {
                             return <span key={idx}>                            
                                         <ListItem button>
                                             <ListItemAvatar>
-                                                <Avatar src={'/api/shops/logo/' + shop._id + '?' + new Date().getTime()} />
+                                                <Avatar src={'/api/shops/logo/' + shop._id + "?" + new Date().getTime()} />
                                             </ListItemAvatar>
                                             <ListItemText primary={shop.name} secondary={shop.description} />
-                                            { auth.isAuthenticated().user && auth.isAuthenticated().user._id == shop.owner._id && (
-                                                <ListItemSecondaryAction>
-                                                    <Link to={'/seller/orders/' + shop.name + '/' + shop._id}>
-                                                        <Button aria-label='Orders' color='primary'>
-                                                            View Orders
-                                                        </Button>
-                                                    </Link>
-                                                    <Link to={"/seller/shop/edit/" + shop._id}>
-                                                        <IconButton aria-label='Edit' color='primary'>
-                                                            <Edit />
-                                                        </IconButton>
-                                                    </Link>
-                                                    <DeleteShop shop={shop} onRemove={this.removeShop} />
-                                                </ListItemSecondaryAction>
-                                            )} 
-
-
-                                            <div className={classes.details}>
-                                                <Typography type='headline' component='h2' color='primary' className={classes.shopTitle}>
-                                                    {shop.name}
-                                                </Typography>
-                                                <Typography type='subheading' component='h4' className={classes.subheading}>
-                                                    {shop.description}
-                                                </Typography>
-                                            </div>                                    
+                                            { 
+                                                auth.isAuthenticated().user && auth.isAuthenticated().user._id == shop.owner._id && (
+                                                    <ListItemSecondaryAction>
+                                                        <Link to={'/seller/orders/' + shop.name + '/' + shop._id}>
+                                                            <Button aria-label='Orders' color='primary'>
+                                                                View Orders
+                                                            </Button>
+                                                        </Link>
+                                                        <Link to={"/seller/shop/edit/" + shop._id}>
+                                                            <IconButton aria-label='Edit' color='primary'>
+                                                                <EditIcon />
+                                                            </IconButton>
+                                                        </Link>
+                                                    </ListItemSecondaryAction>
+                                                )
+                                            }                                   
                                         </ListItem>
                                         <Divider />
                                     </span>

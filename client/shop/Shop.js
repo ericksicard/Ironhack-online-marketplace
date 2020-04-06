@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
-import { listByOwner } from './api-shop'
-import auth from '../auth/auth-helper'
-import { read } from './api-shop'
+import { read } from './api-shop.js'
 
 
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import { List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Divider } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 
 const styles = theme => ({
     root: {
@@ -56,31 +52,35 @@ class Shop extends Component {
     
     componentDidMount= () => {
         read({ shopId: this.match.params.shopId })
-        .then( data => { this.setState({ shop: data })})
-        .catch( err => { this.setState({ error: data.error })})
+        .then( data => {
+            if (data.error) this.setState({ error: data.error })
+            else this.setState({ shop: data })
+        })
     }
 
 
     render() { 
         const { classes } = this.props;
         const logoUrl = this.state.shop._id
-          ? `/api/shops/logo/${this.state.shop._id}?${new Date().getTime()}`
-          : '/api/shops/defaultphoto'
+        ? `/api/shops/logo/${this.state.shop._id}?${new Date().getTime()}`
+        : '/api/shops/defaultphoto'
 
         return (
-            <Card className={classes.card}>
-                <CardContent>
-                    <Typography type="headline" component="h2" className={classes.title}>
-                        {this.state.shop.name}
-                    </Typography>
-                    <br/>
-                    <Avatar src={logoUrl} className={classes.bigAvatar}/>
-                    <br/>
-                    <Typography type="subheading" component="h2" className={classes.subheading}>
-                        {this.state.shop.description}
-                    </Typography><br/>
-                </CardContent>
-            </Card>
+            <div className={classes.root}>
+                <Card className={classes.card}>
+                    <CardContent>
+                        <Typography type="headline" component="h2" className={classes.title}>
+                            {this.state.shop.name}
+                        </Typography>
+                        <br/>
+                        <Avatar src={logoUrl} className={classes.bigAvatar}/>
+                        <br/>
+                        <Typography type="subheading" component="h2" className={classes.subheading}>
+                            {this.state.shop.description}
+                        </Typography><br/>
+                    </CardContent>
+                </Card>
+            </div>
         )
     }
 }

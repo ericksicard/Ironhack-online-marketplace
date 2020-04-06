@@ -22,8 +22,8 @@ const create = (req, res, next) => {
         shop.owner = req.profile;
 
         if (files.image) {
-            shop.image.data = fs.readFileSync(files.image.path);
-            shop.image.contentType = files.image.type;
+            shop.image.data = fs.readFileSync(files.image.path)
+            shop.image.contentType = files.image.type
         }
 
         shop.save()
@@ -51,15 +51,12 @@ const list = (req, res) => {
 
 //Listing shops by owner
 const listByOwner = (req, res) =>{
-    Shop
-    .find({ owner: req.profile._id })
-    .then( shops => res.json(shops))
-    .catch( err => {
-        return res.status(400).json({
+    Shop.find({ owner: req.profile._id }, (err, shops) => {
+        if (err) return res.status(400).json({
             error: errorHandler.getErrorMessage(err)
         })
-    })
-    .populate('owner', '_id name')
+        res.json(shops)
+    }).populate('owner', '_id name')
 }
 
 // Finding a store by ID
@@ -112,12 +109,12 @@ const update = (req, res) => {
         shop.updated = Date.now();
 
         if (files.image) {
-            shop.image.data = fs.readFileSync(files.image.path);
-            shop.image.contentType = files.image.type;
+            shop.image.data = fs.readFileSync(files.image.path)
+            shop.image.contentType = files.image.type
         }
 
         shop.save()
-        .then( shop => { res.json(shop) })
+        .then( () => { res.json(shop) })
         .cath( err => res.status(400).send({
             error: errorHandler.getErrorMessage(err)
         }))
@@ -147,4 +144,5 @@ export default {
     isOwner,
     update,
     photo,
-    defaultPhoto };
+    defaultPhoto 
+};

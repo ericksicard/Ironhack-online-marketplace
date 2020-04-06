@@ -7,8 +7,12 @@ import auth from '../auth/auth-helper'
 
 
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import { List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Divider, Grid, Card, CardContent, TextField, Icon, CardActions } from '@material-ui/core';
+import Icon from '@material-ui/core/Icon';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -138,10 +142,11 @@ class EditShop extends Component {
                                     onChange={ event => this.handleChange(event, 'image')} 
                                     className={classes.input}
                                     id="icon-button-file" 
+                                    multiple
                                     type="file"
                                 />
                                 <label htmlFor="icon-button-file">
-                                    <Button variant='contained' >
+                                    <Button variant='contained' color='primary' component='span' >
                                         Change Logo
                                     </Button>
                                 </label>
