@@ -5,12 +5,18 @@ import shopCtrl from '../controllers/shop.controller';
 
 const router = express.Router();
 
+router.route('/api/shops')
+        .get(shopCtrl.list)
+
+router.route('/api/shop/:shopId')
+        .get(shopCtrl.read)
+
 router.route('/api/shops/by/:userId')
     .post(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.isSeller, shopCtrl.create)
     .get(authCtrl.requireSignin, authCtrl.hasAuthorization, shopCtrl.listByOwner)
 
 router.route('/api/shops/:shopId')
-        .put(authCtrl.requireSignin, shopCtrl.isOwner, shopCtrl.update)
+    .put(authCtrl.requireSignin, shopCtrl.isOwner, shopCtrl.update)
 
 router.route('api/shops/logo/:shopId')
         .get(shopCtrl.photo, shopCtrl.defaultPhoto)
@@ -18,12 +24,8 @@ router.route('api/shops/logo/:shopId')
 router.route('/api/shops/defaultphoto')
         .get(shopCtrl.defaultPhoto)
         
-router.route('/api/shops')
-        .get(shopCtrl.list)
         
 
-router.route('/api/shop/:shopId')
-        .get(shopCtrl.read)
 
 
 // Processes the :userId param and retrieve the associated user from the database

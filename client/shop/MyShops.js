@@ -51,9 +51,10 @@ class MyShops extends Component {
     loadShops = () => {
         const jwt = auth.isAuthenticated()
         listByOwner(
-            {userId: jwt.user._id},
-            {t: jwt.token}
-            ).then( data => {
+            { userId: jwt.user._id },
+            { t: jwt.token }
+            )
+            .then( data => {
                 if (data.error) this.setState({ redirectToSignin: true }) 
                 else {
                     this.setState({ shops: data }) 

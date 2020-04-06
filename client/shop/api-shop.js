@@ -27,7 +27,7 @@ const listByOwner = (params, credentials) => {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
-            'Authorization': 'Bearer' + credentials.t
+            'Authorization': 'Bearer ' + credentials.t
         }
     })
     .then( response => response.json() )

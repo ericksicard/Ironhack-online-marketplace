@@ -52,7 +52,7 @@ in an 'auth' key to the request object, otherwise it throws an authentication er
 const requireSignin = expressJwt({
     secret: config.jwtSecret,
     userProperty: 'auth'
-    })
+})
 
 //Authorizing signed in users
 /*

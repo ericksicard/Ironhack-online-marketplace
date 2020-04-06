@@ -82,4 +82,4 @@ const remove = ( params, credentials ) => {
         .catch( err => console.log(err) )
 };
 
-export { create, list, read, update, remove };
+export { create, list, read, update, remove }
