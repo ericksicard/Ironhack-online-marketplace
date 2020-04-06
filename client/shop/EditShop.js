@@ -77,7 +77,8 @@ class EditShop extends Component {
     
     componentDidMount = () => {
         this.shopData = new FormData();
-        const jwt = auth.isAuthenticated()
+        const jwt = auth.isAuthenticated();
+        
         read(
             {shopId: this.match.params.shopId},
             {t: jwt.token}

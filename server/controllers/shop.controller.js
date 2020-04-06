@@ -13,7 +13,7 @@ const create = (req, res, next) => {
     
     form.parse( req, (err, fields, files) => {
         if (err) {
-            res.status(400).json({
+            return res.status(400).json({
                 message: "Image could not be uploaded"
             })
         }

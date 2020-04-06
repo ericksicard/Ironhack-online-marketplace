@@ -96,7 +96,13 @@ class NewShop extends Component {
                 <Card className={classes.card}>
                     <CardContent>
                         <Typography type='headline' component='h2' className={classes.title}>New Shop</Typography><br/>
-                        <input accept='image/*' onChange={ event => this.handleChange(event, 'image') } className={classes.input} id='icon-button-file' type='file' />
+                        <input 
+                            accept='image/*'
+                            type='file' 
+                            onChange={ event => this.handleChange(event, 'image') } 
+                            className={classes.input} 
+                            id='icon-button-file' 
+                        />
                         <label htmlFor='icon-button-file'>
                             <Button color='secondary' variant='contained' component='span'>
                                 Upload Logo
@@ -122,13 +128,13 @@ class NewShop extends Component {
                             className={classes.textField}
                             margin='normal'
                         /> <br/>
-
-                        {this.state.error && (
-                            <Typography component='p' color='error'>
-                                <Icon color='error' className={classes.error}>error</Icon>
-                                {this.state.error}
-                            </Typography>
-                        )}
+                        {
+                            this.state.error && (
+                                <Typography component='p' color='error'>
+                                    <Icon color='error' className={classes.error}>error</Icon>
+                                    {this.state.error}
+                                </Typography> )
+                        }
                     </CardContent>
                     <CardActions>
                         <Button color='primary' variant='contained' onClick={this.clickSubmit} className={classes.submit}>Submit</Button>

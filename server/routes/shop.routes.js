@@ -18,8 +18,8 @@ router.route('/api/shops/by/:userId')
 router.route('/api/shops/:shopId')
     .put(authCtrl.requireSignin, shopCtrl.isOwner, shopCtrl.update)
 
-router.route('api/shops/logo/:shopId')
-        .get(shopCtrl.photo, shopCtrl.defaultPhoto)
+router.route('/api/shops/logo/:shopId')
+    .get(shopCtrl.photo, shopCtrl.defaultPhoto)
 
 router.route('/api/shops/defaultphoto')
         .get(shopCtrl.defaultPhoto)
