@@ -45,7 +45,7 @@ const styles = theme => ({
 
 
 class Shops extends Component {
-    state = { shops: []}
+    state = { shops: [] }
     
     loadShops = () => {
         list()

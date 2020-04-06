@@ -62,7 +62,7 @@ const listByOwner = (req, res) =>{
 // Finding a store by ID
 const shopByID = (req, res, next, id) => {
     Shop
-    .find(id)
+    .findById(id)
     .populate('owner', '_id name')
     .exec( (err, shop) => {
         if ( err || !shop ) {

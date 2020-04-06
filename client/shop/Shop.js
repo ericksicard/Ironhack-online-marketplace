@@ -29,7 +29,7 @@ const styles = theme => ({
         margin: 'auto'
     },
     subheading: {
-        marginTop: theme.spacing.unit,
+        marginTop: theme.spacing(1),
         color: theme.palette.openTitle
     },
     productTitle: {

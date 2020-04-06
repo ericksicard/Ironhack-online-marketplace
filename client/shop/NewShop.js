@@ -63,7 +63,7 @@ class NewShop extends Component {
 
     handleChange = (event, name) => {
         const value = name === 'image'
-        ? event.target.file[0]
+        ? event.target.files[0]
         : event.target.value
 
         this.shopData.set(name, value)
@@ -92,47 +92,49 @@ class NewShop extends Component {
         }
 
         return (
-            <Card className={classes.card}>
-                <CardContent>
-                    <Typography type='headline' component='h2' className={classes.title}>New Shop</Typography><br/>
-                    <input accept='image/*' onChange={ event => this.handleChange(event, 'image')} className={classes.input} id='icon-button-file' type='file' />
-                    <label htmlFor='icon-button-file'>
-                        <Button color='secondary' variant='contained' component='span'>
-                            Upload Logo
-                            <PhotoCameraIcon/>
-                        </Button>
-                    </label>
-                    <span className={classes.filename}>{this.state.image ? this.state.image : ''}</span><br/>
-                    <TextField 
-                        id='name' 
-                        label='Name' 
-                        className={classes.textField} 
-                        value={this.state.name}
-                        onChange={ event => this.handleChange(event, 'name')}
-                        margin='normal'
-                    /> <br/>
-                    <TextField 
-                        id='multiline-flexible'
-                        label='Description'
-                        multiline
-                        rows='2'
-                        value={this.state.description}
-                        onChange={ event => this.handleChange(event, 'description')}
-                        className={classes.textField}
-                        margin='normal'
-                    /> <br/>
-                    
-                    {this.state.error && (
-                        <Typography component='p' color='error'>
-                            <Icon color='error' className={classes.error}>error</Icon>
-                            {this.state.error}
-                        </Typography>
-                    )}
-                </CardContent>
-                <CardActions>
-                    <Button color='primary' variant='contained' onClick={this.clickSubmit} className={classes.submit}>Submit</Button>
-                </CardActions>
-            </Card>
+            <div>
+                <Card className={classes.card}>
+                    <CardContent>
+                        <Typography type='headline' component='h2' className={classes.title}>New Shop</Typography><br/>
+                        <input accept='image/*' onChange={ event => this.handleChange(event, 'image') } className={classes.input} id='icon-button-file' type='file' />
+                        <label htmlFor='icon-button-file'>
+                            <Button color='secondary' variant='contained' component='span'>
+                                Upload Logo
+                                <PhotoCameraIcon/>
+                            </Button>
+                        </label>
+                        <span className={classes.filename}>{this.state.image ? this.state.image.name : ''}</span><br/>
+                        <TextField 
+                            id='name' 
+                            label='Name' 
+                            className={classes.textField} 
+                            value={this.state.name}
+                            onChange={ event => this.handleChange(event, 'name') }
+                            margin='normal'
+                        /> <br/>
+                        <TextField 
+                            id='multiline-flexible'
+                            label='Description'
+                            multiline
+                            rows='2'
+                            value={this.state.description}
+                            onChange={ event => this.handleChange(event, 'description') }
+                            className={classes.textField}
+                            margin='normal'
+                        /> <br/>
+
+                        {this.state.error && (
+                            <Typography component='p' color='error'>
+                                <Icon color='error' className={classes.error}>error</Icon>
+                                {this.state.error}
+                            </Typography>
+                        )}
+                    </CardContent>
+                    <CardActions>
+                        <Button color='primary' variant='contained' onClick={this.clickSubmit} className={classes.submit}>Submit</Button>
+                    </CardActions>
+                </Card>
+            </div>
         )
     }
 }

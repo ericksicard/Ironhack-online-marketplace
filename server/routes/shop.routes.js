@@ -27,7 +27,6 @@ router.route('/api/shops/defaultphoto')
         
 
 
-
 // Processes the :userId param and retrieve the associated user from the database
 router.param('userId', userCtrl.userByID)
 // Processes the :shopId param and retrieve the associated shop from the database

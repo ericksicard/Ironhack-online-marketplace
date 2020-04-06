@@ -35,7 +35,7 @@ const listByOwner = (params, credentials) => {
 }
 
 // Read shop information
-const read = (params, credentials) => {
+const read = (params) => {
     return fetch('/api/shop/' + params.shopId, {
         method: 'GET'
     })
