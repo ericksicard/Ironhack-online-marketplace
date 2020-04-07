@@ -113,11 +113,14 @@ const update = (req, res) => {
             shop.image.contentType = files.image.type
         }
 
-        shop.save()
-        .then( () => { res.json(shop) })
-        .cath( err => res.status(400).send({
-            error: errorHandler.getErrorMessage(err)
-        }))
+        shop.save( err => {
+            if (err) {
+                return res.status(400).send({
+                    error: errorHandler.getErrorMessage(err)
+                })
+            }
+            res.json(shop)
+        })
     })
 }
 
@@ -135,6 +138,16 @@ const defaultPhoto = (req, res) => {
     return res.sendFile(process.cwd() + profileImage)
 }
 
+// Delete a shop
+const remove = (req, res, next) => {
+    let shop = req.shop;
+    shop.remove()
+        .then( deletedShop => { res.json(deletedShop)} )
+        .catch( err => res.status(400).json({
+            error: errorHandler.getErrorMessage(err)
+        }))
+}
+
 export default { 
     create,
     list,
@@ -144,5 +157,6 @@ export default {
     isOwner,
     update,
     photo,
-    defaultPhoto 
+    defaultPhoto,
+    remove 
 };

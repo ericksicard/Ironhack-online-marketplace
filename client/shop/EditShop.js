@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Link, Redirect } from 'react-router-dom'
 import { read, update } from './api-shop.js'
 import auth from '../auth/auth-helper'
-//import DeleteShop from './DeleteShop'  
 
 
 import { withStyles } from '@material-ui/core/styles';

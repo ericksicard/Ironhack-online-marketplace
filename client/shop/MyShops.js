@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Link, Redirect } from 'react-router-dom'
 import { listByOwner } from './api-shop.js'
 import auth from '../auth/auth-helper'
-//import DeleteShop from './DeleteShop'  
+import DeleteShop from './DeleteShop'  
 
 
 import { withStyles } from '@material-ui/core/styles';
@@ -38,6 +38,9 @@ const styles = theme => ({
     },
     leftIcon: {
         marginRight: "8px"
+    },
+    secondaryActions: {
+        top: '35%'
     }
 });
 
@@ -104,8 +107,9 @@ class MyShops extends Component {
                                             </ListItemAvatar>
                                             <ListItemText primary={shop.name} secondary={shop.description} />
                                             { 
-                                                auth.isAuthenticated().user && auth.isAuthenticated().user._id == shop.owner._id && (
-                                                    <ListItemSecondaryAction>
+                                                auth.isAuthenticated().user && auth.isAuthenticated().user._id == shop.owner._id &&
+                                                (
+                                                    <ListItemSecondaryAction className={classes.secondaryActions}>
                                                         <Link to={'/seller/orders/' + shop.name + '/' + shop._id}>
                                                             <Button aria-label='Orders' color='primary'>
                                                                 View Orders
@@ -116,6 +120,7 @@ class MyShops extends Component {
                                                                 <EditIcon />
                                                             </IconButton>
                                                         </Link>
+                                                        <DeleteShop shop={shop} onRemove={this.removeShop} />
                                                     </ListItemSecondaryAction>
                                                 )
                                             }                                   
