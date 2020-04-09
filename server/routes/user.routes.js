@@ -13,6 +13,7 @@ router.route('/api/users/:userId')
     .put(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.update)
     .delete(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.remove)
 
+// Processes the :userId param and retrieve the associated user from the database
 router.param('userId', userCtrl.userByID)
 
 export default router

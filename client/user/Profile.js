@@ -65,7 +65,10 @@ class Profile extends Component {
     init = userId => {
         const jwt = auth.isAuthenticated()
 
-        read({ userId: userId }, { t: jwt.token } )
+        read(
+            { userId: userId },
+            { t: jwt.token }
+            )
             .then( data => {
                 if (data.error) this.setState({ redirectToSignin: true })
                 else this.setState({ user: data })

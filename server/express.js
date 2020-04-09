@@ -10,6 +10,7 @@ import Template from './../template'
 import userRoutes from './routes/user.routes'
 import authRoutes from './routes/auth.routes'
 import shopRoutes from './routes/shop.routes'
+import productRoutes from './routes/product.routes'
 
 
 //****** Modules for server-side rendering ******
@@ -60,6 +61,7 @@ app.use('/dist', express.static(path.join(CURRENT_WORKING_DIR, 'dist')))
 app.use('/', userRoutes)
 app.use('/', authRoutes)
 app.use('/', shopRoutes)
+app.use('/', productRoutes)
 
 
 //Basic Server-Side Rendering(SSR)
