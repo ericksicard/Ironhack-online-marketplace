@@ -1,6 +1,6 @@
 import formidable from 'formidable';
-import fs from 'fs'
 import _ from 'lodash'
+import fs from 'fs'
 
 import Shop from '../models/shop.model';
 import errorHandler from '../../helpers/dbErrorHandler'

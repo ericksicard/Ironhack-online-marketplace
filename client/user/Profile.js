@@ -80,7 +80,7 @@ class Profile extends Component {
     information is fetched and loaded in the component.
     */
     //CONSIDER static getDerivedStateFromProps
-    UNSAFE_componentWillReceiveProps = (props) => {
+    UNSAFE_componentWillReceiveProps = props => {
         this.init( props.match.params.userId )
     }
 

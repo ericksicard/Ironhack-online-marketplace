@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Link, Redirect } from 'react-router-dom'
 import { read, update } from './api-shop.js'
 import auth from '../auth/auth-helper'
+import MyProducts from '../product/MyProducts'
 
 
 import { withStyles } from '@material-ui/core/styles';
@@ -192,6 +193,9 @@ class EditShop extends Component {
                                 >Update</Button>
                             </CardActions>
                         </Card>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <MyProducts shopId={this.match.params.shopId}/>
                     </Grid>
                 </Grid>                
             </div>

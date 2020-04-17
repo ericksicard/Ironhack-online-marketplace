@@ -69,7 +69,7 @@ class MyShops extends Component {
         const updatedShops = this.state.shops
         const index = updatedShops.indexOf(shop)
         updatedShops.splice(index, 1)
-        this.setState({shops: updatedShops})
+        this.setState({ shops: updatedShops })
     }
 
     componentDidMount = () => {

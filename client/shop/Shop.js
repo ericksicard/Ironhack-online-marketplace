@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import { read } from './api-shop.js'
+import Products from '../product/Products'
+import { listByShop } from '../product/api-product.js'
 
 
 import { withStyles } from '@material-ui/core/styles';
@@ -8,6 +10,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import Grid from '@material-ui/core/Grid';
 
 const styles = theme => ({
     root: {
@@ -49,8 +52,19 @@ class Shop extends Component {
         }
         this.match = match;
     }
+
+    loadProducts = () => {
+        listByShop(
+            { shopId: this.match.params.shopId }
+        )
+        .then( data => {
+            if (data.error) this.setState({ error: data.error })
+            else this.setState({ products: data })
+        })
+    }
     
     componentDidMount= () => {
+        this.loadProducts()
         read({ shopId: this.match.params.shopId })
         .then( data => {
             if (data.error) this.setState({ error: data.error })
@@ -67,19 +81,31 @@ class Shop extends Component {
 
         return (
             <div className={classes.root}>
-                <Card className={classes.card}>
-                    <CardContent>
-                        <Typography type="headline" component="h2" className={classes.title}>
-                            {this.state.shop.name}
-                        </Typography>
-                        <br/>
-                        <Avatar src={logoUrl} className={classes.bigAvatar}/>
-                        <br/>
-                        <Typography type="subheading" component="h2" className={classes.subheading}>
-                            {this.state.shop.description}
-                        </Typography><br/>
-                    </CardContent>
-                </Card>
+                <Grid container spacing={2} >
+                    <Grid item xs={4} >
+                        <Card className={classes.card}>
+                            <CardContent>
+                                <Typography type="headline" component="h2" className={classes.title}>
+                                    {this.state.shop.name}
+                                </Typography>
+                                <br/>
+                                <Avatar src={logoUrl} className={classes.bigAvatar}/>
+                                <br/>
+                                <Typography type="subheading" component="h2" className={classes.subheading}>
+                                    {this.state.shop.description}
+                                </Typography><br/>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={8} >
+                        <Card>
+                            <Typography type='title' component='h2' className={classes.productTitle} >
+                                Products
+                            </Typography>
+                            <Products products={this.state.products} searched={false} />
+                        </Card>
+                    </Grid>
+                </Grid>
             </div>
         )
     }

@@ -2,46 +2,62 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
+import { listLatest, listCategories } from '../product/api-product.js'
+import seaImg from '../assets/images/underwaterSurface.jpg'
+import Search from '../product/Search'
+import Categories from '../product/Categories'
+import Suggestions from '../product/Suggestions'
+
 import { withStyles } from '@material-ui/core/styles';
 import { Card, CardMedia, CardContent } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
-import seaImg from '../assets/images/underwaterSurface.jpg'
+import Grid from '@material-ui/core/Grid';
 
 const styles = theme => ({
-    card: {
-      maxWidth: 600,
-      margin: 'auto',
-      marginTop: theme.spacing(5)
-    },
-    title: {
-      padding:`${theme.spacing(3)}px ${theme.spacing(2)}.5px ${theme.spacing(2)}px`,
-      color: theme.palette.text.secondary
-    },
-    media: {
-      minHeight: 330
-    }
-  })
+  root: {
+    flexGrow: 1,
+    margin: 30,
+  }
+})
 
 class Home extends Component {
-    render() {
-        const { classes } = this.props;
+  state = {
+    suggestionTitle: "Latest Products",
+    suggestions: [],
+    categories: []
+  };
 
-        return (
-            <div>
-                <Card className={classes.card}>               
-                    <Typography type="headline" component="h2" className={classes.title}>
-                        Home Page
-                    </Typography>
-                    <CardMedia className={classes.media} image={seaImg} title="Underwater Surface" />
-                    <CardContent>
-                        <Typography type="body1" component="p">
-                            Welcome to the Ironhack Online Marketplace home page
-                        </Typography>
-                    </CardContent>
-                </Card>
-            </div>
-        )
-    }
+  componentDidMount = () => {
+    listLatest()
+    .then( data => {
+      if (data.error) console.log(data.error)
+      else this.setState({ suggestions: data })
+    })
+
+    listCategories()
+    .then( data => {
+      if (data.error) console.log(data.error)
+      else this.setState({ categories: data })
+    })
+  }
+
+  render() {
+    const { classes } = this.props;
+
+    return (
+        <div className={classes.root}>             
+          <Grid container spacing={3}>
+            <Grid item xs={8}>
+              <Search categories={this.state.categories} />
+              <Categories categories={this.state.categories} />
+            </Grid>
+            <Grid item xs={4}>
+              <Suggestions products={this.state.suggestions} title={this.state.suggestionTitle} />
+            </Grid>
+          </Grid>
+        </div>
+    )
+  }
 }
 
 /*
