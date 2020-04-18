@@ -59,15 +59,18 @@ class Categories extends Component {
         products: [],
         selected: ''
     }
-    UNSAFE_componentWillReceiveProps = props => {
-        this.setState({ selected: props.categories[0] })
-        list({ category: props.categories[0] })
-        .then( data => {
-            if (data.error) console.log(data.error)
-            else this.setState({ products: data })
-        })
-    }
-    listbyCategory = category => event => {
+
+    // This shows, by default, the products of the first category at the begining of the page.
+    //UNSAFE_componentWillReceiveProps = props => {
+    //    this.setState({ selected: props.categories[0] })
+    //    list({ category: props.categories[0] })
+    //    .then( data => {
+    //        if (data.error) console.log(data.error)
+    //        else this.setState({ products: data })
+    //    })
+    //}
+    
+    listbyCategory = (event, category) => {
         this.setState({ selected: category })
         list({ category: category })
         .then( data => {
@@ -98,7 +101,7 @@ class Categories extends Component {
                                         }
                                     }
                                 >
-                                    <span className={classes.link} onClick={this.listbyCategory(tile)}>
+                                    <span className={classes.link} onClick={event => this.listbyCategory(event, tile)}>
                                         {tile}
                                         <Icon className={classes.icon}>
                                             {this.state.selected == tile && 'arrow_drop_down'}

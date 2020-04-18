@@ -128,7 +128,7 @@ class EditShop extends Component {
 
         return (
             <div className={classes.root}>
-                <Grid container spacing={2} >
+                <Grid container spacing={3} >
                     <Grid item xs={6} sm={6} >
                         <Card className={classes.card}>
                             <CardContent>

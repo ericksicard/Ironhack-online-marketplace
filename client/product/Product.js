@@ -25,8 +25,12 @@ const styles = theme => ({
     card: {
       padding:'24px 40px 40px'
     },
+    productTitle: {
+        fontSize: '1.15em',
+        margin: '24px',
+    },
     subheading: {
-      margin: '24px',
+      marginTop: '10px',
       color: theme.palette.openTitle
     },
     price: {
@@ -111,7 +115,7 @@ class Product extends Component {
         return (
             <div className={classes.root}>
                 <Grid container spacing={5}>
-                    <Grid item xs={7}>
+                    <Grid item xs={7} sm={7}>
                         <Card className={classes.card}>
                             {/* <CardHeader 
                                 title={this.state.product.name}
@@ -129,15 +133,18 @@ class Product extends Component {
                                     image={imageUrl}
                                     title={this.state.product.name}
                                 />
-                                <Typography component="p" type="subheading" className={classes.subheading}>
-                                    {this.state.product.description} <br/>
-                                    <span className={classes.price}>$ {this.state.product.price}</span>
-                                    <Link to={'/shops/' + this.state.product.shop._id} className={classes.link}>
-                                        <span>
-                                            <ShoppingBasketIcon className={classes.icon} />
-                                            {this.state.product.shop.name}
-                                        </span>
-                                    </Link>
+                                <Typography component='h3' variant='h3' className={classes.productTitle} color='primary'>
+                                    {this.state.product.name}                                
+                                    <Typography component="p" type="subheading" className={classes.subheading}>
+                                        {this.state.product.description} <br/>
+                                        <span className={classes.price}>$ {this.state.product.price}</span>
+                                        <Link to={'/shops/' + this.state.product.shop._id} className={classes.link}>
+                                            <span>
+                                                <ShoppingBasketIcon className={classes.icon} />
+                                                {this.state.product.shop.name}
+                                            </span>
+                                        </Link>
+                                    </Typography>
                                 </Typography>
                             </div>
                         </Card>
