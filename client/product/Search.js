@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
-import {list} from './api-product.js'
+import { list } from './api-product.js'
 import Products from './Products'
 
 import { withStyles } from '@material-ui/core/styles';
@@ -50,9 +50,13 @@ class Search extends Component {
       results: [],
       searched: false
   }
+  //handleChange = (event, name) => {
+  //    this.setState({ [name]: event.target.value })
+  //}
   handleChange = (event, name) => {
-      this.setState({ [name]: event.target.value })
+    this.setState({ [name]: event.target.value })
   }
+
   search = () => {
     if (this.state.search) {
       list({
@@ -72,18 +76,20 @@ class Search extends Component {
       this.search()
     }
   }
+
   render() {
     const {classes} = this.props;
+
     return (
       <div>
         <Card className={classes.card}> 
           <TextField 
             id='select-category'
             select
-            label='Select Category'
+            label='Select category'
             className={classes.textField}
             value={this.state.category}
-            onChange={ event => this.handleChange(event, 'category') }
+            onChange={ event => this.handleChange(event, 'category')}
             SelectProps={{
               MenuProps:{
                 className: classes.menu
@@ -113,7 +119,7 @@ class Search extends Component {
             <SearchIcon />
           </Button>
           <Divider />
-          <Products products={this.state.results} searched={this.state.searched} />
+          <Products products={this.state.results} searched={this.state.searched}/>
         </Card>
       </div>
     )

@@ -73,19 +73,21 @@ const listByShop = (req, res, next) => {
 
 // Listing latest products
 const listLatest = (req, res, next) => {
-    Product.find({})
-            .sort('-created')
-            .limit(5)
-            .populate('shop', 'id name')
-            .then( products => res.json(products))
-            .catch( err => res.status(400).json({
-                error: errorHandler.getErrorMessage(err)
-            }))
+    Product
+    .find({})
+    .sort('-created')
+    .limit(5)
+    .populate('shop', 'id name')
+    .then( products => res.json(products))
+    .catch( err => res.status(400).json({
+        error: errorHandler.getErrorMessage(err)
+    }))
 }
 
 // Related products
 const listRelated = (req, res, next) => {
-    Product.find({
+    Product
+    .find({
         '_id': {'$ne': req.product},
         'category': req.product.category
     })
@@ -150,11 +152,12 @@ const defaultPhoto = (req, res) => {
 
 // List product categories
 const listCategories = (req, res) => {
-    Product.distinct('category')
-        .then( products => res.json(products))
-        .catch( err => res.status(400).json({
-            error: errorHandler.getErrorMessage(err)
-        }))
+    Product
+    .distinct('category')
+    .then( products => res.json(products) )
+    .catch( err => res.status(400).json({
+        error: errorHandler.getErrorMessage(err)
+    }))
 }
 
 // List serached products
@@ -163,16 +166,17 @@ const list = (req, res) => {
 
     /* If the URL's Query Parameter "value" has a value asigned we start building the first .find()
     condition, which is all product names that match the value passed as the first query parameter*/
-    if (req.query.value) {
-        query.name = {'$regex': req.query.search, '$option': 'i'};
+    if (req.query.search) {
+        query.name = {'$regex': req.query.search, '$options': 'i'};
     }
 
     /* Now we create the second .find() condition which is related to the product category*/
     if (req.query.category && req.query.category != 'All') {
-        query.category = req.query.category;
+        query.category =  req.query.category;
     }
 
     // The last step is the finding
+    
     Product.find( query )
         .populate('shop', '_id, name')
         .select('-image')                       // excludes the image
@@ -180,7 +184,6 @@ const list = (req, res) => {
         .catch( err => res.status(400).json({
             error: errorHandler.getErrorMessage(err)
         }))
-
 }
 
 export default { 

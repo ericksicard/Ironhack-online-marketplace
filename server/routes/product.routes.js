@@ -19,6 +19,14 @@ router.route('/api/products/latest')
 router.route('/api/products/related/:productId')
     .get(productCtrl.listRelated)
 
+// Get product categories
+router.route('/api/products/categories')
+    .get(productCtrl.listCategories)
+
+// List searched products
+router.route('/api/products')
+    .get(productCtrl.list)
+
 // Read a product
 router.route('/api/products/:productId')
     .get(productCtrl.read)
@@ -35,13 +43,6 @@ router.route('/api/product/:shopId/:productId')
     .put(authCtrl.requireSignin, shopCtrl.isOwner, productCtrl.update)
     .delete(authCtrl.requireSignin, shopCtrl.isOwner, productCtrl.remove)
 
-// Get product categories
-router.route('/api/products/categories')
-    .get(productCtrl.listCategories)
-
-// List searched products
-router.route('/api/products')
-    .get(productCtrl.list)
 
 // Processes the :shopId param and retrieve the associated shop from the database
 router.param('shopId', shopCtrl.shopByID)

@@ -27,18 +27,25 @@ class Home extends Component {
     categories: []
   };
 
-  componentDidMount = () => {
+  loadLatest = () => {
     listLatest()
     .then( data => {
       if (data.error) console.log(data.error)
       else this.setState({ suggestions: data })
     })
+  }
 
+  loadCategories = () => {
     listCategories()
     .then( data => {
       if (data.error) console.log(data.error)
       else this.setState({ categories: data })
     })
+  }
+
+  componentDidMount = () => {
+    this.loadLatest()
+    this.loadCategories()
   }
 
   render() {
@@ -47,11 +54,11 @@ class Home extends Component {
     return (
         <div className={classes.root}>             
           <Grid container spacing={3}>
-            <Grid item xs={8}>
+            <Grid item xs={8} sm={8}>
               <Search categories={this.state.categories} />
               <Categories categories={this.state.categories} />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={4} sm={4}>
               <Suggestions products={this.state.suggestions} title={this.state.suggestionTitle} />
             </Grid>
           </Grid>

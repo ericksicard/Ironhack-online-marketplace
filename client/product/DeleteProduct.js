@@ -76,7 +76,8 @@ To validate the required injection of style declarations as props to the compone
 the PropTypes requirement validator to the defined component.
 */
 DeleteProduct.propTypes = {
-    shop: PropTypes.object.isRequired,
+    shopId: PropTypes.string.isRequired,
+    product: PropTypes.object.isRequired,
     onRemove: PropTypes.func.isRequired 
 }
 

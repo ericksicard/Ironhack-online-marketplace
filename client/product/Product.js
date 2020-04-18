@@ -38,13 +38,14 @@ const styles = theme => ({
       color: '#375a53',
     },
     media: {
-      height: 200,
-      display: 'inline-block',
-      width: '50%',
-      marginLeft: '24px'
+      height: '50%',
+      //display: 'inline-block',
+      width: '45%',
+      padding: '1%',
+      //marginLeft: '24px'
     },
     icon: {
-      verticalAlign: 'sub'
+        verticalAlign: 'sub'
     },
     link:{
       color: '#3e4c54b3',
@@ -123,16 +124,17 @@ class Product extends Component {
                             /> */}
                             <div className={classes.flex}>
                                 <CardMedia
+                                    component="img" 
                                     className={classes.media}
                                     image={imageUrl}
                                     title={this.state.product.name}
                                 />
-                                <Typography component='p' type='subheading' className={classes.subheading}>
-                                    {this.state.product.description}
+                                <Typography component="p" type="subheading" className={classes.subheading}>
+                                    {this.state.product.description} <br/>
                                     <span className={classes.price}>$ {this.state.product.price}</span>
                                     <Link to={'/shops/' + this.state.product.shop._id} className={classes.link}>
                                         <span>
-                                            <ShoppingBasketIcon />
+                                            <ShoppingBasketIcon className={classes.icon} />
                                             {this.state.product.shop.name}
                                         </span>
                                     </Link>

@@ -39,7 +39,7 @@ const listRelated = params => {
 }
 
 const read = params => {
-    return fetch('api/products/' + params.productId, {
+    return fetch('/api/products/' + params.productId, {
         method: 'GET'
     })
     .then( response => response.json() )
@@ -85,7 +85,7 @@ const listCategories = () => {
 // List searched products
 const list = params => {
     const query = queryString.stringify(params);
-    return fetch('/api/product?' + query, {
+    return fetch('/api/products?' + query, {
         method: 'GET'
     })
     .then( response => response.json() )
@@ -93,4 +93,14 @@ const list = params => {
 }
 
 
-export { create, listByShop, listLatest, listRelated, read, update, remove, listCategories, list }
+export { 
+        create,
+        listByShop,
+        listLatest,
+        listRelated,
+        read,
+        update,
+        remove,
+        listCategories,
+        list
+    }

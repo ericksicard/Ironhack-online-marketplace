@@ -30,21 +30,23 @@ const styles = theme => ({
       verticalAlign: 'middle'
     },
     card: {
+      display: 'inline-flex',
+      
       width: '100%',
-      display: 'inline-flex'
+      //display: 'inline-flex'
     },
     details: {
-      display: 'inline-block',
-      width: "100%"
+      display: 'flex',
+      flexDirection: 'column',
     },
     content: {
       flex: '1 0 auto',
-      padding: '16px 8px 0px'
+      padding: '5% 1%'
     },
     cover: {
       width: '65%',
-      height: 130,
-      margin: '8px'
+      height: '85%',
+      padding: '1%'
     },
     controls: {
       marginTop: '8px'
@@ -91,7 +93,8 @@ const styles = theme => ({
                     {this.props.products.map( (product, idx) => {
                         return <span key={idx}>
                             <Card className={classes.card}>
-                                <CardMedia 
+                                <CardMedia
+                                    component="img" 
                                     className={classes.cover}
                                     image={'/api/product/image/' + product._id}
                                     title={product.name}
@@ -99,13 +102,13 @@ const styles = theme => ({
                                 <div className={classes.details}>
                                     <CardContent className={classes.content}>
                                       <Link to={'/product/' + product._id}>
-                                        <Typography type='title' component='h3' className={classes.productTitle} color='primary'>
+                                        <Typography component='h3' variant='h3' className={classes.productTitle} color='primary'>
                                           {product.name}
                                         </Typography>
                                       </Link>
                                       <Link to={'/shops/' + product.shop._id}>
-                                          <Typography type="subheading" className={classes.subheading}>
-                                              <ShoppingBasketIcon />
+                                          <Typography variant="subtitle1" className={classes.subheading}>
+                                              <ShoppingBasketIcon className={classes.icon} />
                                               {product.shop.name}
                                           </Typography>
                                       </Link>

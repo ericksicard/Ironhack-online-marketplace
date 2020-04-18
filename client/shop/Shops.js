@@ -49,10 +49,10 @@ class Shops extends Component {
     
     loadShops = () => {
         list()
-            .then( data => {
-                if (data.error) console.log(data.error)
-                else this.setState({ shops: data })
-            })
+        .then( data => {
+            if (data.error) console.log(data.error)
+            else this.setState({ shops: data })
+        })
     }
 
     componentDidMount = () => {
