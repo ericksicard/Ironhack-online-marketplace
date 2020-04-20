@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom';
-import Suggestions from './Suggestions'
+
 import { read, listRelated } from './api-product.js'
+import Suggestions from './Suggestions'
+import AddToCart from '../cart/AddToCart';
 
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import StorefrontIcon from '@material-ui/icons/Storefront';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -117,7 +119,7 @@ class Product extends Component {
                 <Grid container spacing={5}>
                     <Grid item xs={7} sm={7}>
                         <Card className={classes.card}>
-                            {/* <CardHeader 
+                            <CardHeader 
                                 title={this.state.product.name}
                                 subheader={this.state.product.quantity > 0 ? 'In Stock' : 'Out of Stock'}
                                 action={
@@ -125,7 +127,7 @@ class Product extends Component {
                                         <AddToCart cardStyle={classes.addCart} item={this.state.product} />
                                     </span>
                                 }
-                            /> */}
+                            />
                             <div className={classes.flex}>
                                 <CardMedia
                                     component="img" 
@@ -140,7 +142,7 @@ class Product extends Component {
                                         <span className={classes.price}>$ {this.state.product.price}</span>
                                         <Link to={'/shops/' + this.state.product.shop._id} className={classes.link}>
                                             <span>
-                                                <ShoppingBasketIcon className={classes.icon} />
+                                                <StorefrontIcon className={classes.icon} />
                                                 {this.state.product.shop.name}
                                             </span>
                                         </Link>

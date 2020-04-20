@@ -52,7 +52,8 @@ const styles = theme => ({
 
 class Products extends Component {
     render() {
-        const {classes} = this.props
+        const {classes} = this.props;
+        
         return (
             <div className={classes.root}>
                 {this.props.products.length > 0 ? 
