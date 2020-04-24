@@ -13,6 +13,9 @@ router.route('/api/users/:userId')
     .put(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.update)
     .delete(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.remove)
 
+router.route('/api/stripe_auth/:userId')
+    put(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.stripe_auth, userCtrl.update)
+
 // Processes the :userId param and retrieve the associated user from the database
 router.param('userId', userCtrl.userByID)
 

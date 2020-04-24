@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Redirect, Link } from 'react-router-dom'
+
 import DeleteUser from './DeleteUser'
 import auth from './../auth/auth-helper'
 import { read } from './api-user.js'
+import config from '../../config/config'
+import stripeButton from './../assets/images/stripeButton.png'
 
 
 import { withStyles } from '@material-ui/core/styles';
@@ -27,6 +30,13 @@ const styles = theme => ({
   title: {
     margin: `${theme.spacing(3)}px 0 ${theme.spacing(2)}px`,
     color: theme.palette.protectedTitle
+  },
+  stripe_connect: {
+    marginRight: '10px',
+  },
+  stripe_connected: {
+    verticalAlign: 'super',
+    marginRight: '10px'
   }
 })
 
@@ -109,6 +119,20 @@ class Profile extends Component {
                             <ListItemText primary={this.state.user.name} secondary={this.state.user.email} />
                             { auth.isAuthenticated().user && auth.isAuthenticated().user._id == this.state.user._id && (
                                 <ListItemSecondaryAction>
+                                    {this.state.user.seller && 
+                                        (this.state.user.stripe_seller 
+                                            ? (<Button variant='contained' disable className={classes.stripe_connected}>
+                                                Stripe connected
+                                            </Button>)
+                                            : (<a   href={"https://connect.stripe.com/oauth/authorize?response_type=code&client_id="
+                                                        + config.stripe_connect_test_client_id
+                                                        + "&scope=read_write"}
+                                                    className={classes.stripe_connect}
+                                                >
+                                                    <img src={stripeButton}/>
+                                                </a>)
+                                        )
+                                    }
                                     <Link to={'/user/edit/' + this.state.user._id} >
                                         <IconButton aria-label="Edit" color="primary">
                                             <EditIcon />
