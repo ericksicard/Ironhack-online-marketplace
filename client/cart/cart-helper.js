@@ -60,6 +60,17 @@ const cart =  {
         return cart;
     },
 
+    // If the create order API is successful, we will empty the cart.
+    /* The emptyCart method removes the cart object from localStorage , and updates the state
+    of the view by executing the callback passed.
+    */
+    emptyCart: cb => {
+        if (typeof window !== 'undefined') {
+            localStorage.removeItem('cart')
+            cb()
+        }
+    }
+
 
 }
 

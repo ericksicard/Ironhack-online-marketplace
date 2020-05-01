@@ -40,7 +40,8 @@ const auth = {
 
     //Delete credentials and sign out
     signout(cb) {
-        if (typeof window !== "undefined") sessionStorage.removeItem('jwt')
+        if (typeof window !== "undefined") 
+            sessionStorage.removeItem('jwt')
         cb()
         signout()
             .then( data => {

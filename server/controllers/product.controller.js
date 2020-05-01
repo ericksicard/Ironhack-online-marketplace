@@ -160,7 +160,7 @@ const listCategories = (req, res) => {
     }))
 }
 
-// List serached products
+// List searched products
 const list = (req, res) => {
     const query = {};  // initializing the query object as an empty object
 
@@ -175,8 +175,7 @@ const list = (req, res) => {
         query.category =  req.query.category;
     }
 
-    // The last step is the finding
-    
+    // The last step is the finding    
     Product.find( query )
         .populate('shop', '_id, name')
         .select('-image')                       // excludes the image
@@ -185,6 +184,35 @@ const list = (req, res) => {
             error: errorHandler.getErrorMessage(err)
         }))
 }
+
+// Updates the stock quantities of all the products purchased in a new order.
+/*Since the update operation in this case involves a bulk update of multiple products in the
+collection after matching with an array of products ordered, we will use the bulkWrite
+method in MongoDB to send multiple updateOne operations to the MongoDB server with
+one command. The multiple updateOne operations required are first listed in bulkOps
+using the map function. This will be faster than sending multiple independent save or
+update operations because with bulkWrite() there is only one round trip to MongoDB.
+*/
+const decreaseQuantity = (req, res, next) => {
+    let bulkOps = req.body.order.products.map( item => {
+        return {
+            'updateOne': {
+                'filter': { '_id': item.product._id },
+                'update': { '$inc': { 'quantity': -item.quantity } }
+            }
+        }
+    })
+
+    Product.bulkWrite(bulkOps, {}, (err, products) => {
+        if ( err) {
+            return res.status(400).json({
+                error: 'Could not update product'
+            })
+        }
+        next()
+    })
+}
+
 
 export default { 
     create,
@@ -198,5 +226,6 @@ export default {
     photo,
     defaultPhoto,
     listCategories,
-    list
+    list,
+    decreaseQuantity
 }

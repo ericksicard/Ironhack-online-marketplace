@@ -4,7 +4,7 @@ import {StripeProvider} from 'react-stripe-elements'
 
 import config from '../../config/config'
 import CartItems from './CartItems'
-import CheckOut from './CheckOut'
+import CheckOut from './Checkout'
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
