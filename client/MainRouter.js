@@ -48,20 +48,21 @@ class MainRouter extends Component {
                     <PrivateRoute path="/user/edit/:userId" component={EditProfile}/>
                     <Route path="/user/:userId" component={Profile}/>
                     
-                    <PrivateRoute path="/seller/shop/new" component={NewShop}/>
-                    <PrivateRoute path="/seller/shop/edit/:shopId" component={EditShop}/>
-                    <PrivateRoute path="/seller/shops" component={MyShops}/>                    
+                    <Route path="/cart" component={Cart}/>
+                    <Route path="/product/:productId" component={Product}/>
                     <Route path="/shops/all" component={Shops}/>
                     <Route path="/shops/:shopId" component={Shop}/>
                     
-                    <PrivateRoute path="/seller/:shopId/products/new" component={NewProduct}/>
-                    <PrivateRoute path="/seller/:shopId/:productId/edit" component={EditProduct}/>
-                    <Route path="/product/:productId" component={Product}/>
+                    <PrivateRoute path="/seller/orders/:shop/:shopId" component={ShopOrders}/>
 
-                    <Route path="/cart" component={Cart}/>
+                    <PrivateRoute path="/seller/shops" component={MyShops}/>                    
+                    <PrivateRoute path="/seller/shop/new" component={NewShop}/>
+                    <PrivateRoute path="/seller/shop/edit/:shopId" component={EditShop}/>
+                    <PrivateRoute path="/seller/:shopId/products/new" component={NewProduct}/>
+                    <PrivateRoute path="/seller/:shopId/:productId/edit" component={EditProduct}/>  
+
                     <Route path="/seller/stripe/connect" component={StripeConnect}/>
 
-                    <PrivateRoute path="/seller/orders/:shop/:shopId" component={ShopOrders}/>
                 </Switch>
             </div>
         )

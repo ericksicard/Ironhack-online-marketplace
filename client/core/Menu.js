@@ -56,43 +56,43 @@ const Menu = withRouter( ({ history }) => (
                                 <ShoppingCartIcon />
                             </Badge>
                         </Button>
-                    </Link>
-                    <Link to="/users" >
-                        <Button style={isActive(history, "/users")}>Users</Button>
-                    </Link>
+                    </Link>                    
                 </div>
-
                 <div style={{'position':'absolute', 'right': '10px'}}>
                     <span style={{'float': 'right'}}>
-                    {!auth.isAuthenticated() && (
-                        <span>
-                            <Link to="/signup">
-                                <Button style={isActive(history, "/signup")}> Sign up </Button>
-                            </Link>
-                            <Link to="/signin">
-                                <Button style={isActive(history, "/signin")}> Sign In </Button>
-                            </Link>
-                        </span>)
-                    }
-                    {auth.isAuthenticated() && (
-                        <span>
-                            {auth.isAuthenticated().user.seller && (
-                                <Link to="/seller/shops">
-                                    <Button style={isPartActive(history, "/seller/")}>
-                                        My Shops
+                        {
+                            !auth.isAuthenticated() && (
+                                <span>
+                                    <Link to="/signup">
+                                        <Button style={isActive(history, "/signup")}> Sign up </Button>
+                                    </Link>
+                                    <Link to="/signin">
+                                        <Button style={isActive(history, "/signin")}> Sign In </Button>
+                                    </Link>
+                                </span>
+                            )
+                        }
+                        {
+                            auth.isAuthenticated() && (
+                                <span>
+                                    {auth.isAuthenticated().user.seller && (
+                                        <Link to="/seller/shops">
+                                            <Button style={isPartActive(history, "/seller/")}>
+                                                My Shops
+                                            </Button>
+                                        </Link>
+                                    )}
+                                    <Link to={"/user/" + auth.isAuthenticated().user._id} >
+                                        <Button style={isActive(history, "/user/" + auth.isAuthenticated().user._id)} >
+                                            My Profile
+                                        </Button>
+                                    </Link>
+                                    <Button color="inherit" onClick={ () => { auth.signout( () => history.push('/') )}} >
+                                        Sign Out
                                     </Button>
-                                </Link>
-                            )}
-                            <Link to={"/user/" + auth.isAuthenticated().user._id} >
-                                <Button style={isActive(history, "/user/" + auth.isAuthenticated().user._id)} >
-                                    My Profile
-                                </Button>
-                            </Link>
-                            <Button color="inherit" onClick={ () => { auth.signout( () => history.push('/') )}} >
-                                Sign Out
-                            </Button>
-                        </span>
-                    )}
+                                </span>
+                            )
+                        }
                     </span>
                 </div>
             </Toolbar>

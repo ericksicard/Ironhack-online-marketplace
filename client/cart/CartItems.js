@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import auth from '../auth/auth-helper.js';
 import cart from './cart-helper.js'
@@ -121,7 +121,7 @@ class CartItems extends Component {
         total = this.state.cartItems.reduce( (acc, cur) => {
             return acc + (cur.product.price * cur.quantity)
         }, 0)
-        return total;
+        return total.toFixed(2);
     }
 
     removeItem = (event, index) => {

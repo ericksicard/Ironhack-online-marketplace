@@ -1,6 +1,6 @@
 const cart =  { 
 
-    itemTotal: () => {
+    itemTotal() {
         if (typeof window !== 'undefined') {
             if (localStorage.getItem('cart')) {
                 return JSON.parse(localStorage.getItem('cart')).length
@@ -9,7 +9,7 @@ const cart =  {
         return 0;
     },
 
-    addItem: (item, cb) => {
+    addItem(item, cb) {
         let cart = [];
         if (typeof window !== 'undefined') {
             if (localStorage.getItem('cart')) {
@@ -26,7 +26,7 @@ const cart =  {
     },
 
     // This method retrieves and returns the cart details from localStorage
-    getCart: () => {
+    getCart() {
         if (typeof window !== 'undefined') {
             if (localStorage.getItem('cart')) {
                 return JSON.parse(localStorage.getItem('cart'))
@@ -36,7 +36,7 @@ const cart =  {
     },
 
     // This method updates the product quantity from localStorage
-    updateCart: (index, quantity) => {
+    updateCart(index, quantity) {
         let cart = []
         if (typeof window !== 'undefined') {
             if (localStorage.getItem('cart')) {
@@ -48,7 +48,7 @@ const cart =  {
     },
 
     // This method removes a product from localStorage 
-    removeItem: index => {
+    removeItem(index) {
         let cart = [];
         if ( typeof window !== 'undefined') {
             if (localStorage.getItem('cart')) {
@@ -64,7 +64,7 @@ const cart =  {
     /* The emptyCart method removes the cart object from localStorage , and updates the state
     of the view by executing the callback passed.
     */
-    emptyCart: cb => {
+    emptyCart(cb) {
         if (typeof window !== 'undefined') {
             localStorage.removeItem('cart')
             cb()

@@ -12,9 +12,10 @@ const create = (params, credentials, order, token) => {
     .catch( err => console.log(err))
 }
 
-const listByShop = (params, credentials) => {
+const listByShop = (params, credentials, signal) => {
     return fetch('/api/orders/shop/' + params.shopId, {
         method: 'GET',
+        signal: signal,
         headers: {
             'Accept': 'application/json',
             'Authorization': 'Bearer ' + credentials.t
@@ -24,22 +25,17 @@ const listByShop = (params, credentials) => {
     .catch( err => console.log(err))
 }
 
-const getStatusValues = async (signal) => {
-    try {
-        let response = await fetch('/api/order/satus_values', {
-            method: 'GET',
-            signal: signal
-        })
-        return response.json()
-    }
-    catch( err) {
-        console.log(err)
-    }
-}
+const getStatusValues = (signal) => {
+    return fetch('/api/order/status_values', {
+      method: 'GET',
+      signal: signal,
+    })
+    .then( response => response.json() )
+    .catch( err => console.log(err))
+  }
 
-const cancelProduct = async (params, credentials, product) => {
-    try {
-        let response = await fetch('/api/order/' + params.shopId + '/cancel/' + params.productId, {
+const cancelProduct = (params, credentials, product) => {
+    return fetch('/api/order/' + params.shopId + '/cancel/' + params.productId, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
@@ -48,16 +44,12 @@ const cancelProduct = async (params, credentials, product) => {
             },
             body: JSON.stringify(product)
         })
-        return response.json()
-    }
-    catch(err) {
-        console.log(err)
-    }
+        .then( response => response.json() )
+        .catch( err => console.log(err))
 }
 
-const processCharge = async (params, credentials, product) => {
-    try {
-        let response = await fetch('/api/order/' + params.orderId + '/charge/' + params.userId + '/' + params.shopId, {
+const processCharge = (params, credentials, product) => {
+    return fetch('/api/order/' + params.orderId + '/charge/' + params.userId + '/' + params.shopId, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
@@ -66,16 +58,12 @@ const processCharge = async (params, credentials, product) => {
             },
             body: JSON.stringify(product)
         })
-        return response.json()
-    }
-    catch(err) {
-        console.log(err)
-    }
+        .then( response => response.json() )
+        .catch( err => console.log(err))
 }
 
-const update = async (params, credentials, product) => {
-    try {
-        let response = await fetch('/api/order/status/' + params.shopId, {
+const update = (params, credentials, product) => {
+    return fetch('/api/order/status/' + params.shopId, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
@@ -84,11 +72,8 @@ const update = async (params, credentials, product) => {
             },
             body: JSON.stringify(product)
         })
-        return response.json()
-    }
-    catch(err) {
-        console.log(err)
-    }
+        .then( response => response.json() )
+        .catch( err => console.log(err))
 }
 
 export {

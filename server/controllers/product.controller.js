@@ -218,21 +218,20 @@ const decreaseQuantity = (req, res, next) => {
 quantity value by the quantity that was ordered by the customer, now that the order for
 this product has been cancelled.
 */
-const increaseQuantity = async (req, res, next) => {
-    try {
-        await Product.findByIdAndUpdate(
-            req.product._id,
-            { $inc: { 'quantity': req.body.quantity }},
-            { new: true }
-        )
-        .exec()
+const increaseQuantity = (req, res, next) => {
+    Product.findByIdAndUpdate(
+        req.product._id,
+        { $inc: { 'quantity': req.body.quantity }},
+        { new: true }
+    )
+    .exec( (err, result) => {
+        if (err) {
+            return res.status(400).json({
+                error: errorHandler.getErrorMessage(err)
+            })
+        }
         next()
-    }
-    catch(err) {
-        return res.status(400).json({
-            error: errorHandler.getErrorMessage(err)
-        })
-    }
+    })  
 }
 
 

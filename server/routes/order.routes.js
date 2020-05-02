@@ -4,7 +4,6 @@ import authCtrl from '../controllers/auth.controller';
 import productCtrl from '../controllers/product.controller';
 import orderCtrl from '../controllers/order.controller';
 import shopCtrl from '../controllers/shop.controller';
-import auth from '../../client/auth/auth-helper';
 
 const router = express.Router();
 
@@ -26,19 +25,19 @@ router.route('/api/order/satus_values')
 
 // order cancellation
 router.route('/api/order/:shopId/cancel/:productId')
-        .put(auth.requireSignin, shopCtrl.isOwner,
+        .put(authCtrl.requireSignin, shopCtrl.isOwner,
         productCtrl.increaseQuantity, orderCtrl.update)
 
 
 // process charge for product
 router.route('/api/order/:orderId/charge/:userId/:shopId')
-        .put(auth.requireSignin, shopCtrl.isOwner,
+        .put(authCtrl.requireSignin, shopCtrl.isOwner,
         userCtrl.createCharge, orderCtrl.update)
 
 
 // order status update other that 'Processing' or 'Cancelled'
 router.route('/api/order/status/:shopId')
-        .put(auth.requireSignin, shopCtrl.isOwner, orderCtrl.update)
+        .put(authCtrl.requireSignin, shopCtrl.isOwner, orderCtrl.update)
 
 
 router.param('userId', userCtrl.userByID)
