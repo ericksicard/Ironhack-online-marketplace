@@ -144,9 +144,10 @@ const stripeCustomer = (req, res, next) => {
     // Updating an existing Stripe Customer
     if (req.profile.stripe_customer) {
         //update stripe customer
-        myStripe.customer.update(req.profile.stripe_customer, {
-            source: req.body.token
-        }, (err, customer) => {
+        myStripe.customer.update(
+            req.profile.stripe_customer,
+            { source: req.body.token },
+            (err, customer) => {
             if (err) {
                 return res.status(400).send({
                     error: errorHandler.getErrorMessage(err)

@@ -1,4 +1,4 @@
-import { Order } from '../models/order.model'
+import { Order, CartItem } from '../models/order.model'
 import errorHandler from '../../helpers/dbErrorHandler'
 
 
@@ -37,6 +37,57 @@ const listByShop = (req, res) => {
         }))
 }
 
+// This methods get the order status possible values
+const getStatusValues = (req, res) => {
+    res.json(CartItem.schema.path('status').enumValues)
+}
+
+// This method updated the status of the products included in an order
+const update = async (req, res) => {
+    try{
+        let order = await Order.update(
+            { 'products._id': req.body.cartItemId },
+            { '$set': { 'products.$.status': req.body.status }}
+        )
+        res.json(order)            
+    }
+    catch(err) {
+        return res.status(400).json({
+            error: errorHandler.getErrorMessage(err)
+        })
+    }
+}
+
+/* To retrieve the order associated with the orderId parameter in the route, we will use the
+orderByID order controller method, which gets the order from the Order collection and
+attaches it to the request object to be accessed by the next methods
+*/
+const orderByID = async (req, res, next, id) => {
+    try {
+        let order = await Order.find( id )
+            .populate( 'products.product', 'name price' )
+            .populate('products.shop', 'name')
+            .exec()
+        if (!order) {
+            return res.status(400).json({
+                error: 'Order not found'
+            })
+        }
+        req.order = order;
+        next()
+    }
+    catch(err) {
+        return res.status(400).json({
+            error: errorHandler.getErrorMessage(err)
+        })
+    }
+}
 
 
-export default { create, listByShop }
+export default { 
+    create,
+    listByShop,
+    getStatusValues,
+    update,
+    orderByID
+}

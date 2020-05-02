@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import {CardElement, injectStripe} from 'react-stripe-elements'
-import {Redirect} from 'react-router-dom'
+import { CardElement, injectStripe } from 'react-stripe-elements'
+import { Redirect } from 'react-router-dom'
 
 import auth from './../auth/auth-helper'
 import cart from './cart-helper.js'
@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 
 const PlaceOrder = props => {
     const classes = useStyles()
-    const [values, setValues] = useStyles({
+    const [values, setValues] = useState({
         order: {},
         error: '',
         redirect: false,
@@ -68,7 +68,7 @@ const PlaceOrder = props => {
                     }
                     else {
                         cart.emptyCart( () => {
-                            setValues( {...values, 'orderId': data, 'redirect': true} )
+                            setValues( {...values, 'orderId': data._id, 'redirect': true} )
                         })
                     }
                 })

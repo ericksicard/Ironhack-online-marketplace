@@ -25,7 +25,7 @@ import Cart from './cart/Cart'
 
 import StripeConnect from './user/StripeConnect'
 
-import ShopOrders from './order/ShopOrder'
+import ShopOrders from './order/ShopOrders'
 
 class MainRouter extends Component {
     //Removes the server-side injected CSS when React component mounts

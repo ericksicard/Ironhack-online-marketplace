@@ -185,7 +185,7 @@ const list = (req, res) => {
         }))
 }
 
-// Updates the stock quantities of all the products purchased in a new order.
+// Updates the stock quantities of the products purchased in a new order.
 /*Since the update operation in this case involves a bulk update of multiple products in the
 collection after matching with an array of products ordered, we will use the bulkWrite
 method in MongoDB to send multiple updateOne operations to the MongoDB server with
@@ -213,6 +213,29 @@ const decreaseQuantity = (req, res, next) => {
     })
 }
 
+// Updates the stock quantities of the products in the cancelled order.
+/*It finds the product by the matching ID in the Product collection and increases the
+quantity value by the quantity that was ordered by the customer, now that the order for
+this product has been cancelled.
+*/
+const increaseQuantity = async (req, res, next) => {
+    try {
+        await Product.findByIdAndUpdate(
+            req.product._id,
+            { $inc: { 'quantity': req.body.quantity }},
+            { new: true }
+        )
+        .exec()
+        next()
+    }
+    catch(err) {
+        return res.status(400).json({
+            error: errorHandler.getErrorMessage(err)
+        })
+    }
+}
+
+
 
 export default { 
     create,
@@ -227,5 +250,6 @@ export default {
     defaultPhoto,
     listCategories,
     list,
-    decreaseQuantity
+    decreaseQuantity,
+    increaseQuantity
 }
