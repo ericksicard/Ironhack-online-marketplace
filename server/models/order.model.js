@@ -16,6 +16,8 @@ const CartItemSchema = new mongoose.Schema({
         enum: ['Not processed', 'Processing', 'Shipped', 'Delivered', 'Cancelled']
     }
 })
+const CartItem = mongoose.model('CartItem', CartItemSchema);
+
 
 const OrderSchema = new mongoose.Schema({
     products: [CartItemSchema],
@@ -48,7 +50,6 @@ const OrderSchema = new mongoose.Schema({
         ref: 'User'
     }
 })
-
-const CartItem = mongoose.model('CartItem', CartItemSchema);
 const Order = mongoose.model('Order', OrderSchema);
+
 export {Order, CartItem}

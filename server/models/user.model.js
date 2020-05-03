@@ -40,6 +40,7 @@ const UserSchema = new mongoose.Schema({
     
     //Seller's Stripe account credential
     stripe_seller: {},
+    
     //Customer's Stripe account credential
     stripe_customer: {}
 });

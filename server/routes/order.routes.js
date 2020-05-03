@@ -8,9 +8,12 @@ import shopCtrl from '../controllers/shop.controller';
 const router = express.Router();
 
 // creates an order
+// router.route('/api/orders/:userId')
+//         .post(authCtrl.requireSignin, userCtrl.stripeCustomer,
+//         productCtrl.decreaseQuantity, orderCtrl.create)
 router.route('/api/orders/:userId')
-        .post(authCtrl.requireSignin, userCtrl.stripeCustomer,
-        productCtrl.decreaseQuantity, orderCtrl.create)
+        .post(authCtrl.requireSignin, productCtrl.decreaseQuantity,
+        orderCtrl.create)
 
 
 // lists orders by shops
@@ -18,8 +21,13 @@ router.route('/api/orders/shop/:shopId')
         .get(authCtrl.requireSignin, shopCtrl.isOwner, orderCtrl.listByShop)
 
 
-// retrieves the order status values
-router.route('/api/order/satus_values')
+// lists orders by users
+router.route('/api/orders/user/:userId')
+        .get(authCtrl.requireSignin, orderCtrl.listByUser)
+
+
+// retrieves the status of a product in an order
+router.route('/api/order/status_values')
         .get(orderCtrl.getStatusValues)
 
 
@@ -38,6 +46,11 @@ router.route('/api/order/:orderId/charge/:userId/:shopId')
 // order status update other that 'Processing' or 'Cancelled'
 router.route('/api/order/status/:shopId')
         .put(authCtrl.requireSignin, shopCtrl.isOwner, orderCtrl.update)
+
+
+// getting the order entered
+router.route('/api/order/:orderId')
+        .get(orderCtrl.read)
 
 
 router.param('userId', userCtrl.userByID)

@@ -26,6 +26,7 @@ import Cart from './cart/Cart'
 import StripeConnect from './user/StripeConnect'
 
 import ShopOrders from './order/ShopOrders'
+import Order from './order/Order'
 
 class MainRouter extends Component {
     //Removes the server-side injected CSS when React component mounts
@@ -53,6 +54,7 @@ class MainRouter extends Component {
                     <Route path="/shops/all" component={Shops}/>
                     <Route path="/shops/:shopId" component={Shop}/>
                     
+                    <Route path="/order/:orderId" component={Order}/>
                     <PrivateRoute path="/seller/orders/:shop/:shopId" component={ShopOrders}/>
 
                     <PrivateRoute path="/seller/shops" component={MyShops}/>                    

@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import auth from './../auth/auth-helper'
 import { listByShop } from './api-order.js'
 import ProductOrderEdit from './ProductOrderEdit'
 
-import { makeStyles } from '@material-ui/core/styles'
+import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -15,7 +16,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore'
 import Collapse from '@material-ui/core/Collapse'
 import Divider from '@material-ui/core/Divider'
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
     root: theme.mixins.gutters({
       maxWidth: 600,
       margin: 'auto',
@@ -37,92 +38,107 @@ const useStyles = makeStyles(theme => ({
       paddingTop: '16px',
       backgroundColor:'#f8f8f8'
     }
-}))
+})
 
-export default function ShopOrders({ match }) {
-    const classes = useStyles();
-    const [orders, setOrders] = useState([])
-    const [open, setOpen] = useState(0)
-    const jwt = auth.isAuthenticated();
+class ShopOrders extends Component {
+    constructor({ match }) {
+        super()
+        this.state = {
+            open: 0,
+            orders: []
+        }
+        this.match = match
+    }
 
-    useEffect( () => {
-        const abortController = new AbortController();
-        const signal = abortController.signal;
-
+    loadOrders = () => {
+        const jwt = auth.isAuthenticated();
         listByShop(
-            { shopId: match.params.shopId },
-            { t: jwt.token },
-            signal
+            {shopId: this.match.params.shopId},
+            {t: jwt.token}
         )
         .then( data => {
-            if (data.error) console.log(data)
-            else setOrders(data)
+            if (data.error) {
+                console.log(data)
+            }
+            else {
+                this.setState({ orders: data })
+            }
         })
-
-        return function cleanup() {
-            abortController.abort()
-        }
-    }, [])
-
-    const handleClick = (event, index) => {
-        setOpen(index)
     }
 
-    const updateOrders = (index, updateOrder) => {
-        let updatedOrders = orders;
-        updatedOrders[index] = updateOrder;
-        setOrders([...updatedOrders])
+    componentDidMount = () => {
+        this.loadOrders()
     }
 
-    return (
-        <div>
-            <Paper className={classes.root} elevation={4}>
-                <Typography type='title' className={classes.title}>
-                    Orders in {match.params.shop}
-                </Typography>
-                <List dense>
-                    {orders.map( (order, index) => {
-                        return <span key={index}>
-                            <ListItem button onClick={ event => handleClick(event, index)}>
-                                <ListItemText
-                                    primary={'Order # ' + order._id}
-                                    secondary={(new Date(order.created)).toDateString()}
-                                />
-                                { open == index ? <ExpandLess /> : <ExpandMore /> }
-                            </ListItem>
-                            <Divider />
-                            <Collapse component='li' in={open == index} timeout='auto' unmountOnExit>
-                                <ProductOrderEdit 
-                                    shopId={match.params.shopId}
-                                    order={order}
-                                    orderIndex={index}
-                                    updateOrders={updateOrders}
-                                />
-                                <div className={classes.customerDetails}>
-                                    <Typography type='subheading' component='h3' className={classes.subheading}>
-                                        Delivery to:
-                                    </Typography>
-                                    <Typography type="subheading" component="h3" color="primary">
-                                        <strong>{order.customer_name}</strong>
-                                        ({order.customer_email})
-                                    </Typography>
-                                    <Typography type="subheading" component="h3" color="primary">
-                                        {order.delivery_address.street}
-                                    </Typography>
-                                    <Typography type="subheading" component="h3" color="primary">
-                                        {order.delivery_address.city},
-                                        {order.delivery_address.state}
-                                        {order.delivery_address.zipcode}
-                                    </Typography>
-                                    <Typography type="subheading" component="h3" color="primary">
-                                        {order.delivery_address.country}
-                                    </Typography><br/>
-                                </div>
-                            </Collapse>
-                        </span>
-                    })}
-                </List>
-            </Paper>
-        </div>
-    )
+    handleClick = (event, index) => {
+        this.setState({ open: index })
+    }
+
+    updateOrders = (index, updateOrder) => {
+        let orders = this.state.orders;
+        orders[index] = updateOrder;
+        this.setState({ orders: orders })
+    }
+
+    render() {
+        const {classes} = this.props;
+
+        return (
+            <div>
+                <Paper className={classes.root} elevation={4}>
+                    <Typography type='title' className={classes.title}>
+                        Orders in {this.match.params.shop}
+                    </Typography>
+                    <List dense>
+                        {this.state.orders.map( (order, index) => {
+                            return <span key={index}>
+                                <ListItem button onClick={ event => this.handleClick(event, index)}>
+                                    <ListItemText
+                                        primary={'Order # ' + order._id}
+                                        secondary={(new Date(order.created)).toDateString()}
+                                    />
+                                    { this.state.open == index ? <ExpandLess /> : <ExpandMore /> }
+                                </ListItem>
+                                <Divider />
+                                <Collapse component='li' in={this.state.open == index} timeout='auto' unmountOnExit>
+                                    <ProductOrderEdit 
+                                        shopId={this.match.params.shopId}
+                                        order={order}
+                                        orderIndex={index}
+                                        updateOrders={this.updateOrders}
+                                    />
+                                    <div className={classes.customerDetails}>
+                                        <Typography type='subheading' component='h3' className={classes.subheading}>
+                                            Delivery to:
+                                        </Typography>
+                                        <Typography type="subheading" component="h3" color="primary">
+                                            <strong>{order.customer_name}</strong>
+                                            ({order.customer_email})
+                                        </Typography>
+                                        <Typography type="subheading" component="h3" color="primary">
+                                            {order.delivery_address.street}
+                                        </Typography>
+                                        <Typography type="subheading" component="h3" color="primary">
+                                            {order.delivery_address.city},
+                                            {order.delivery_address.state}
+                                            {order.delivery_address.zipcode}
+                                        </Typography>
+                                        <Typography type="subheading" component="h3" color="primary">
+                                            {order.delivery_address.country}
+                                        </Typography><br/>
+                                    </div>
+                                </Collapse>
+                            </span>
+                        })}
+                    </List>
+                </Paper>
+            </div>
+        )
+    }
 }
+
+ShopOrders.propTypes = {
+    classes: PropTypes.object.isRequired
+}
+  
+export default withStyles(styles)(ShopOrders)
