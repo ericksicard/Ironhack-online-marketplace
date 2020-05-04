@@ -37,7 +37,7 @@ import { indigo, pink, red, teal } from '@material-ui/core/colors';
 //****** end ******
 
 //comment it out when building the application code for production!!!!!
-import devBundle from './devBundle' 
+//import devBundle from './devBundle' 
 
 //Serving static files from the dist folder
 const CURRENT_WORKING_DIR = process.cwd()
@@ -45,7 +45,7 @@ const CURRENT_WORKING_DIR = process.cwd()
 const app = express();
 
 //comment it out when building the application code for production!!!!!
-devBundle.compile(app)              
+//devBundle.compile(app)              
 
 // Middlewares
 app.use(bodyParser.json())      // parse body params and attache them to req.body
