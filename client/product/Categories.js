@@ -48,7 +48,8 @@ const styles = theme => ({
       fontSize: '0.9em'
     },
     link: {
-      color: '#4d6538',
+      //color: '#4d6538',
+      color: 'white',
       textShadow: '0px 2px 12px #ffffff',
       cursor:'pointer'
     }
@@ -61,14 +62,14 @@ class Categories extends Component {
     }
 
     // This shows, by default, the products of the first category at the begining of the page.
-    //UNSAFE_componentWillReceiveProps = props => {
-    //    this.setState({ selected: props.categories[0] })
-    //    list({ category: props.categories[0] })
-    //    .then( data => {
-    //        if (data.error) console.log(data.error)
-    //        else this.setState({ products: data })
-    //    })
-    //}
+    UNSAFE_componentWillReceiveProps = props => {
+        this.setState({ selected: props.categories[0] })
+        list({ category: props.categories[0] })
+        .then( data => {
+            if (data.error) console.log(data.error)
+            else this.setState({ products: data })
+        })
+    }
     
     listbyCategory = (event, category) => {
         this.setState({ selected: category })
@@ -96,8 +97,8 @@ class Categories extends Component {
                                         {
                                             height: '64px',
                                             backgroundColor: this.state.selected == tile
-                                            ? 'rgba(95, 139, 137, 0.56)'
-                                            :'rgba(95, 124, 139, 0.32)'
+                                            ? 'rgb(2,39,129)'
+                                            : 'rgb(63,81,181)'
                                         }
                                     }
                                 >
